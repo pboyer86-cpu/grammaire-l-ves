@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interface A : Reconnaître les Natures Grammaticales</title>
+<link rel="stylesheet" href="reconnaitrenatures.css">
+
+<script src="../construire des phrases/correcteur2.js"></script>
+
+</head>
+<body>
+
+<a href="../index.html" class="back-button">
+    &larr; Retour à l'accueil
+</a>
+<h1>🧠 Entraînement : Reconnaître les Natures Grammaticales</h1>
+
+<div class="zone-controle">
+    <button id="generate-phrase-btn" style="padding: 12px 20px; font-size: 16px;">
+        🔄 Générer une Nouvelle Phrase
+    </button>
+</div>
+
+<div class="zone-exercice">
+    <h2>Clique sur un mot pour identifier sa nature :</h2>
+    
+    <div class="phrase-container" id="phrase-exercice">
+        </div>
+</div>
+
+<div id="nature-selection-modal" class="modal-overlay">
+  <div class="modal-content">
+    <span id="modal-close-btn" class="modal-close-btn">&times;</span>
+    
+    <h3 id="modal-word-title">Mot sélectionné : <span id="current-selected-word" style="color: var(--color-primary); font-style: italic;">""</span></h3>
+    
+    <div id="nature-selection-area">
+      <h4>1. Choisissez la NATURE (Type) :</h4>
+      <div class="choix-buttons" id="nature-buttons-container">
+          <button data-type="determinant">Déterminant</button>
+          <button data-type="nom">Nom</button>
+          <button data-type="verbe">Verbe</button>
+          <button data-type="adjectif">Adjectif</button>
+          <button data-type="pronom">Pronom</button>
+          <button data-type="adverbe">Adverbe</button>
+          <button data-type="preposition">Préposition</button>
+          <button data-type="conjonction">Conjonction</button>
+      </div>
+
+      <div id="subtype-section">
+          <h4>2. Précisez le SOUS-TYPE (Détail) :</h4>
+          <div class="choix-buttons" id="subtype-buttons-container">
+              </div>
+      </div>
+      
+      <p id="validation-feedback" class="result-message"></p>
+
+      <button id="validate-nature-btn" class="validation-btn" disabled>
+          ✅ Valider ma réponse
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    // --- CIBLAGE DES ÉLÉMENTS CLÉS ---
+    const generateBtn = document.getElementById('generate-phrase-btn');
+    const phraseContainer = document.getElementById('phrase-exercice');
+    const modal = document.getElementById('nature-selection-modal');
+    const modalCloseBtn = modal.querySelector('.modal-close-btn');
+    const selectedWordSpan = document.getElementById('current-selected-word');
+    const natureButtonsContainer = document.getElementById('nature-buttons-container');
+    const subtypeSection = document.getElementById('subtype-section');
+    const subtypeButtonsContainer = document.getElementById('subtype-buttons-container');
+    const validateBtn = document.getElementById('validate-nature-btn');
+    const validationFeedback = document.getElementById('validation-feedback');
+
+    let wordBank = null;
+    const MAX_ATTEMPTS = 50;
+
+    // --- FONCTIONS UTILITAIRES ---
+
+    function getRandomItem(array) {
+        if (!array || array.length === 0) return null;
+        const index = Math.floor(Math.random() * array.length);
+        return array[index];
+    }
+
+    function getRandomFlexion() {
+        return {
+            gender: getRandomItem(['masculin', 'feminin']),
+            number: getRandomItem(['singulier', 'pluriel'])
+        };
+    }
+
+    /**
+     * Détermine la clé de conjugaison à utiliser en fonction du sujet.
+     * @param {Object} sujet - Le mot (ou le noyau) du groupe sujet.
+     * @returns {string} La clé de conjugaison (ex: 'il', 'ils', 'je').
+     */
+    function getConjugationPerson(sujet) {
+        if (!sujet) return 'il'; // Par défaut
+
+        if (sujet.type === 'pronom' && sujet.person) {
+            return sujet.person; // 'je', 'tu', 'il', 'nous', 'vous', 'ils'
+        }
+
+        if (sujet.type === 'nom') {
+            return sujet.number === 'pluriel' ? 'ils' : 'il';
+        }
+        return 'il';
+    }
+
+    // --- FONCTION DE CHARGEMENT DE LA BANQUE DE MOTS (INDEX.HTML) ---
+
+    async function loadWordBank() {
+        try {
+            // NOTE : Vérifiez que ce chemin est correct par rapport à votre dossier 'construire des phrases'
+            const response = await fetch('../construire des phrases/generetaphrase.html');
+            
+            if (!response.ok) {
+                // Si la banque ne se charge pas, c'est la cause la plus fréquente d'échec total.
+                throw new Error(`Erreur HTTP: ${response.status}. Le fichier 'generetaphrase.html' n'a pas été trouvé ou accessible. Utilisez 'Live Server' pour éviter les problèmes d'accès au fichier.`);
+            }
+
+            const htmlText = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlText, 'text/html');
+            const wordTokens = doc.querySelectorAll('#word-bank .word');
+            
+            if (wordTokens.length === 0) {
+                throw new Error("Aucun mot trouvé dans la div #word-bank de 'generetaphrase.html'.");
+            }
+            
+            wordBank = {};
+            wordTokens.forEach(token => {
+                const type = token.dataset.type;
+                if (type) {
+                    if (!wordBank[type]) {
+                        wordBank[type] = [];
+                    }
+                    wordBank[type].push({
+                        text: token.textContent.trim(),
+                        ...token.dataset
+                    });
+                }
+            });
+
+            console.log(`Banque de mots chargée : ${wordTokens.length} mots indexés.`);
+            generateBtn.disabled = false;
+            
+        } catch (error) {
+            console.error("FATAL: Impossible de charger ou d'indexer la banque de mots.", error);
+            phraseContainer.innerHTML = `<p style="color:var(--color-danger); font-weight:bold;">
+                ERREUR FATALE: La banque de mots n'a pas pu être chargée.<br>
+                ${error.message}
+            </p>`;
+            generateBtn.disabled = true;
+            wordBank = null; 
+        }
+    }
+
+
+    // --- FONCTIONS DE CONSTRUCTION DES BLOCS ---
+
+    function chooseWord(type, constraints = {}) {
+        if (!wordBank || !wordBank[type]) return null;
+
+        let candidates = wordBank[type];
+
+        Object.keys(constraints).forEach(key => {
+            if (constraints[key] && key !== 'text') {
+                candidates = candidates.filter(word => {
+                    // Si le mot a la contrainte ET elle ne correspond pas (et n'est pas 'mixte'), on rejette.
+                    if (word[key] && word[key] !== 'mixte' && word[key] !== constraints[key]) {
+                        return false;
+                    }
+                    return true;
+                });
+            }
+        });
+
+        if (candidates.length === 0) return null;
+        return getRandomItem(candidates);
+    }
+
+    function generateGN(flexion) {
+        // 1. Choisir un nom de base (toujours au singulier pour commencer)
+        const nomBase = chooseWord('nom', { subtype: 'commun', gender: flexion.gender });
+        if (!nomBase) return null;
+
+        let nomFinal = { ...nomBase };
+        let determinantFinal = null;
+
+        // 2. Gérer le pluriel si demandé
+        if (flexion.number === 'pluriel') {
+            // On cherche la forme plurielle du nom dans son dataset
+            if (nomBase.plural) {
+                nomFinal.text = nomBase.plural;
+                nomFinal.number = 'pluriel';
+            } else {
+                // Si pas de forme plurielle définie, on ne peut pas construire le GN pluriel.
+                return null;
+            }
+        } else {
+            nomFinal.number = 'singulier';
+        }
+
+        // 3. Choisir un déterminant qui s'accorde avec le nom final (en genre ET en nombre)
+        determinantFinal = chooseWord('determinant', { gender: nomFinal.gender, number: nomFinal.number });
+        if (!determinantFinal) return null;
+
+        // 4. Construire le groupe
+        const gnWords = [determinantFinal, nomFinal];
+
+        // (La logique pour l'adjectif pourrait être ajoutée ici si besoin)
+
+        return gnWords;
+    }
+    
+    /**
+     * CORRECTION CRITIQUE : Ajout d'un fallback si la forme conjuguée exacte manque.
+     */
+    function generateVerbe(sujet) {
+        const person = getConjugationPerson(sujet);
+        const candidates = wordBank.verbe || [];
+        if (candidates.length === 0) return null;
+
+        const baseVerb = getRandomItem(candidates);
+        if (!baseVerb) return null;
+
+        // Construit la clé camelCase comme 'presentIl', 'presentNous', etc.
+        const conjugatedKey = 'present' + person.charAt(0).toUpperCase() + person.slice(1);
+        let conjugatedText = baseVerb[conjugatedKey];
+        
+        // Si la conjugaison est manquante, on utilise l'infinitif (base text)
+        if (!conjugatedText) {
+             conjugatedText = baseVerb.text; 
+             console.warn(`Attention : Forme conjuguée "${conjugatedKey}" manquante pour "${baseVerb.text}". Utilisation de la forme de base.`);
+        }
+        
+        if (conjugatedText) {
+             return [{ ...baseVerb, text: conjugatedText, person: person }];
+        }
+        
+        return null;
+    }
+    
+    function generateGPron(flexion) {
+        const constraints = { subtype: 'personnel-sujet', number: flexion.number };
+        
+        if (flexion.gender) {
+             constraints.gender = flexion.gender;
+        }
+
+        const pronom = chooseWord('pronom', constraints);
+        
+        if (pronom && pronom.person) {
+            return [pronom];
+        } else {
+            return null;
+        }
+    }
+    
+    function generateGP() {
+        const words = [];
+        
+        // 1. Préposition (P)
+        const prep = chooseWord('preposition'); 
+        if (!prep) return null;
+        words.push(prep);
+        
+        // 2. Groupe Nominal (GN) avec une flexion aléatoire
+        const gnFlexion = getRandomFlexion();
+        const gnBlock = generateGN(gnFlexion);
+        
+        if (gnBlock) {
+            words.push(...gnBlock);
+        } else {
+            return null;
+        }
+        
+        return words;
+    }
+
+
+    // --- FONCTION PRINCIPALE DE GÉNÉRATION ---
+    
+    function generateNewPhrase() {
+        if (!wordBank || typeof Correcteur2 === 'undefined' || !Correcteur2.REGLES_STRUCTURE) {
+            phraseContainer.innerHTML = "Erreur: La banque de mots ou les règles de structure sont indisponibles.";
+            return;
+        }
+        
+        // Tentative en boucle
+        for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+            let generatedPhrase = [];
+            const usedWordTexts = new Set(); // Pour suivre les mots déjà utilisés
+            let constructionSuccess = true;
+            let sujet = null; 
+            let sujetFlexion = getRandomFlexion();
+
+            try {
+                // 1. CHOISIR UN PATRON ALÉATOIRE
+                const pattern = getRandomItem(Correcteur2.REGLES_STRUCTURE);
+                if (!pattern) continue; 
+
+                // 2. PARCOURS ET CONSTRUCTION DES BLOCS
+                for (let index = 0; index < pattern.length; index++) {
+                    const blockType = pattern[index];
+                    const isSujet = index === 0;
+                    let block = [];
+
+                    if (blockType === 'GN') {
+                        const currentFlexion = isSujet ? sujetFlexion : getRandomFlexion();
+                        block = generateGN(currentFlexion);
+                        if (isSujet && block) sujet = block.find(w => w.type === 'nom' || w.type === 'pronom'); // Sujet est le nom/pronom
+                    } 
+                    else if (blockType === 'GPron') {
+                        const currentFlexion = isSujet ? sujetFlexion : getRandomFlexion();
+                        block = generateGPron(currentFlexion);
+                        if (isSujet && block) sujet = block[0];
+                    }
+                    else if (blockType === 'verbe') {
+                        if (sujet) {
+                            block = generateVerbe(sujet);
+                        } else {
+                            constructionSuccess = false; // Ne peut pas générer un verbe sans sujet
+                            break;
+                        }
+                    }
+                    else if (blockType === 'GP') {
+                        block = generateGP();
+                         // On empêche la génération de phrases avec des articles partitifs
+                        if (block && block.some(word => word.subtype === 'article-partitif')) {
+                            constructionSuccess = false;
+                            break;
+                        }
+                    }
+                    // TODO: Ajouter GAdj, GAdv, etc.
+
+                    if (block && block.length > 0) {
+                        // Vérifier si un mot du bloc est déjà dans la phrase
+                        const hasDuplicate = block.some(word => usedWordTexts.has(word.text));
+                        if (hasDuplicate) {
+                            constructionSuccess = false; // Échec si un doublon est trouvé
+                            break;
+                        }
+
+                        // Ajouter les nouveaux mots à la liste des mots utilisés
+                        block.forEach(word => {
+                            if (word.text) usedWordTexts.add(word.text);
+                        });
+
+                        generatedPhrase.push(...block);
+                    } else {
+                        // Échec de la construction de ce bloc (manque de mot/règle)
+                        constructionSuccess = false;
+                        break;
+                    }
+                }
+
+                // 3. FIN DE LA CONSTRUCTION : Si tout a réussi
+                if (constructionSuccess && generatedPhrase.length > 0) {
+                    // Majuscule au début et ponctuation
+                    if (generatedPhrase[0] && generatedPhrase[0].text) {
+                        generatedPhrase[0].text = generatedPhrase[0].text.charAt(0).toUpperCase() + generatedPhrase[0].text.slice(1);
+                    }
+                    generatedPhrase.push({ text: '.', type: 'ponctuation' }); 
+                    
+                    renderPhrase(generatedPhrase);
+                    closeModal();
+                    return; 
+                }
+            
+            } catch (error) {
+                console.error("Erreur critique lors de la tentative de génération :", error);
+                constructionSuccess = false;
+            }
+        }
+        
+        // 4. Échec final
+        phraseContainer.innerHTML = `<p style="color:var(--color-danger); font-weight:bold;">
+            ❌ IMPOSSIBLE DE GÉNÉRER PHRASE VALIDE (10 tentatives échouées). <br>
+            Vérifiez que votre banque de mots est suffisamment riche en accords (genre/nombre) et en formes conjuguées (present3ps/present3pp).
+        </p>`;
+        closeModal();
+    }
+    
+    // --- FONCTIONS DE RENDU ET DE GESTION DE LA MODALE ---
+
+    function renderPhrase(words) {
+        if (!wordBank) return;
+
+        phraseContainer.innerHTML = ''; 
+
+        words.forEach(word => {
+            const token = document.createElement('div');
+            token.className = 'word-token';
+            token.textContent = word.text;
+            token.dataset.type = word.type;
+            
+            // Copier toutes les données dans le dataset pour la validation
+            Object.keys(word).forEach(key => {
+                 if (key !== 'text') {
+                     token.dataset[key] = word[key];
+                 }
+            });
+
+            token.addEventListener('click', () => handleWordClick(token)); 
+            phraseContainer.appendChild(token);
+        });
+    }
+
+    const closeModal = () => {
+        modal.classList.remove('visible');
+        const selectedToken = document.querySelector('.word-token.selected');
+        if (selectedToken) {
+            selectedToken.classList.remove('selected');
+        }
+        resetModalState();
+    };
+
+    let currentSelectedToken = null;
+    let selectedNature = null;
+    let selectedSubtype = null;
+
+    const SUBTYPE_MAP = {
+        determinant: ['article-defini', 'article-indefini', 'article-partitif', 'demonstratif', 'possessif', 'interrogatif','numeraux', 'indefini'],
+        nom: ['commun', 'propre'],
+        pronom: ['personnel-sujet', 'personnel-complement', 'relatif'],
+        verbe: ['etat', 'intransitif', 'transitif-direct', 'transitif-indirect'],
+        adjectif: ['qualificatif', 'relationnel'],
+        adverbe: ['maniere', 'temps', 'lieu', 'quantite'],
+        conjonction: ['coordination', 'subordination'],
+    };
+
+    function resetModalState() {
+        selectedNature = null;
+        selectedSubtype = null;
+        natureButtonsContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+        subtypeButtonsContainer.innerHTML = '';
+        subtypeSection.style.display = 'none';
+        validateBtn.disabled = true;
+        validationFeedback.style.display = 'none';
+    }
+
+    function handleWordClick(wordToken) {
+        if (wordToken.classList.contains('correct') || wordToken.dataset.type === 'ponctuation') {
+            return; 
+        }
+        
+        document.querySelectorAll('.word-token.selected').forEach(t => t.classList.remove('selected'));
+        wordToken.classList.add('selected');
+        currentSelectedToken = wordToken;
+
+        selectedWordSpan.textContent = `"${wordToken.textContent.trim()}"`;
+        resetModalState();
+        modal.classList.add('visible');
+    }
+
+    natureButtonsContainer.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'BUTTON') return;
+
+        selectedNature = e.target.dataset.type;
+        selectedSubtype = null;
+
+        natureButtonsContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+
+        updateSubtypeButtons(selectedNature);
+    });
+
+    function updateSubtypeButtons(nature) {
+        subtypeButtonsContainer.innerHTML = '';
+        const subtypes = SUBTYPE_MAP[nature];
+
+        if (subtypes && subtypes.length > 0) {
+            subtypeSection.style.display = 'block';
+            subtypes.forEach(subtype => {
+                const btn = document.createElement('button');
+                btn.dataset.subtype = subtype;
+                btn.textContent = subtype.replace(/-/g, ' '); 
+                btn.onclick = () => {
+                    selectedSubtype = subtype;
+                    subtypeButtonsContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    validateBtn.disabled = false;
+                    validationFeedback.style.display = 'none';
+                };
+                subtypeButtonsContainer.appendChild(btn);
+            });
+            validateBtn.disabled = true;
+        } else {
+            subtypeSection.style.display = 'none';
+            validateBtn.disabled = false;
+        }
+    }
+
+    validateBtn.addEventListener('click', () => {
+        if (!currentSelectedToken || !selectedNature) return;
+
+        const correctNature = currentSelectedToken.dataset.type;
+        // Si le sous-type est défini dans le dataset du jeton, on l'utilise pour la correction
+        const correctSubtype = currentSelectedToken.dataset.subtype || null;
+
+        const isNatureCorrect = (selectedNature === correctNature);
+        const isSubtypeCorrect = (!correctSubtype && !selectedSubtype) || (selectedSubtype === correctSubtype);
+
+        if (isNatureCorrect && isSubtypeCorrect) {
+            handleCorrectAnswer();
+        } else {
+            handleIncorrectAnswer();
+        }
+    });
+
+    function handleCorrectAnswer() {
+        currentSelectedToken.classList.add('correct');
+        currentSelectedToken.classList.remove('selected');
+
+        const natureTag = document.createElement('div');
+        natureTag.className = 'nature-tag';
+        
+        let tagText = currentSelectedToken.dataset.type;
+        if (currentSelectedToken.dataset.subtype) {
+            // Afficher le sous-type réel pour le tag (sinon ça affichera l'attribut dataset)
+            const subtypeDisplay = currentSelectedToken.dataset.subtype.replace(/-/g, ' ');
+            tagText += ` (${subtypeDisplay})`;
+        }
+        natureTag.textContent = tagText;
+
+        currentSelectedToken.appendChild(natureTag);
+
+        closeModal();
+    }
+
+    function handleIncorrectAnswer() {
+        modal.classList.add('shake');
+        setTimeout(() => modal.classList.remove('shake'), 500);
+
+        validationFeedback.textContent = '❌ Ce n\'est pas la bonne réponse. Essaie encore !';
+        validationFeedback.className = 'result-message error visible';
+        validationFeedback.style.display = 'block';
+    }
+
+    // --- CONNEXION DES ÉVÉNEMENTS & INITIALISATION ---
+
+    generateBtn.addEventListener('click', generateNewPhrase);
+    modalCloseBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { 
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        generateBtn.disabled = true;
+        await loadWordBank(); 
+        if (wordBank) generateNewPhrase();
+    });
+</script>
+</body>
+</html>

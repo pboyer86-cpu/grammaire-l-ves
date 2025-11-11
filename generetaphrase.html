@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzle – Phrase simple (banque classée)</title>
+<link rel="stylesheet" href="style.css">
+<style>
+    .back-button {
+        display: inline-block;
+        padding: 10px 18px;
+        margin-bottom: 20px;
+        background-color: #6c757d; /* Un gris neutre */
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.2s, transform 0.2s;
+    }
+    .back-button:hover {
+        background-color: #5a6268;
+        transform: translateY(-1px);
+    }
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-button">
+    &larr; Retour à l'accueil
+</a>
+<h1>Construis ta phrase simple</h1>
+
+<h3>Banque de mots :</h3>
+<div id="word-bank">
+  <div class="categories-container">
+    <div class="category">
+      <h4 onclick="toggleCategory(this)">
+        <span>Déterminants</span>
+        <span class="category-toggle">▶</span>
+      </h4>
+      <div class="category-content">
+        <div class="subcategory">
+          <strong>Articles définis</strong>
+          <div class="word" data-type="determinant" data-subtype="article-defini" data-gender="masculin" data-number="singulier">Le</div>
+          <div class="word" data-type="determinant" data-subtype="article-defini" data-gender="feminin" data-number="singulier">La</div>
+          <div class="word" data-type="determinant" data-subtype="article-defini" data-gender="mixte" data-number="pluriel">Les</div>
+          <div class="word" data-type="determinant" data-subtype="article-defini" data-gender="elision" data-number="singulier">L'</div>
+        </div>
+        <div class="subcategory">
+          <strong>Articles indéfinis</strong>
+          <div class="word" data-type="determinant" data-subtype="article-indefini" data-gender="masculin" data-number="singulier">Un</div>
+          <div class="word" data-type="determinant" data-subtype="article-indefini" data-gender="feminin" data-number="singulier">Une</div>
+          <div class="word" data-type="determinant" data-subtype="article-indefini" data-gender="mixte" data-number="pluriel">Des</div>
+        </div>
+        <div class="subcategory">
+          <strong>Articles partitifs</strong>
+          <div class="word" data-type="determinant" data-subtype="article-partitif" data-gender="masculin" data-number="singulier">Du</div>
+          <div class="word" data-type="determinant" data-subtype="article-partitif" data-gender="feminin" data-number="singulier">De la</div>
+          <div class="word" data-type="determinant" data-subtype="article-partitif" data-gender="elision" data-number="singulier">De l'</div>
+        </div>
+        <div class="subcategory">
+          <strong>Démonstratifs</strong>
+          <div class="word" data-type="determinant" data-subtype="demonstratif" data-gender="masculin" data-number="singulier">Ce</div>
+          <div class="word" data-type="determinant" data-subtype="demonstratif" data-gender="masculin" data-number="singulier">Cet</div>
+          <div class="word" data-type="determinant" data-subtype="demonstratif" data-gender="feminin" data-number="singulier">Cette</div>
+          <div class="word" data-type="determinant" data-subtype="demonstratif" data-gender="mixte" data-number="pluriel">Ces</div>
+        </div>
+        <div class="subcategory">
+          <strong>Possessifs</strong>
+          <div class="word" data-type="determinant" data-subtype="possessif" data-gender="masculin" data-number="singulier">Mon</div>
+          <div class="word" data-type="determinant" data-subtype="possessif" data-gender="feminin" data-number="singulier">Ma</div>
+          <div class="word" data-type="determinant" data-subtype="possessif" data-gender="mixte" data-number="pluriel">Mes</div>
+          <div class="word" data-type="determinant" data-subtype="possessif" data-gender="masculin" data-number="singulier">Ton</div>
+          <div class="word" data-type="determinant" data-subtype="possessif" data-gender="feminin" data-number="singulier">Ta</div>
+          <div class="word" data-type="determinant" data-subtype="possessif" data-gender="mixte" data-number="pluriel">Tes</div>
+          <div class="word" data-type="determinant" data-subtype="possessif" data-gender="masculin" data-number="singulier">Son</div>
+          <div class="word" data-type="determinant" data-subtype="possessif" data-gender="feminin" data-number="singulier">Sa</div>
+          <div class="word" data-type="determinant" data-subtype="possessif" data-gender="mixte" data-number="pluriel">Ses</div>
+        </div>
+        <div class="subcategory">
+          <strong>Interrogatifs</strong>
+          <div class="word" data-type="determinant" data-subtype="interrogatif" data-gender="masculin" data-number="singulier">Quel</div>
+          <div class="word" data-type="determinant" data-subtype="interrogatif" data-gender="feminin" data-number="singulier">Quelle</div>
+          <div class="word" data-type="determinant" data-subtype="interrogatif" data-gender="masculin" data-number="pluriel">Quels</div>
+          <div class="word" data-type="determinant" data-subtype="interrogatif" data-gender="feminin" data-number="pluriel">Quelles</div>
+        </div>
+        <div class="subcategory">
+          <strong>Indéfinis</strong>
+          <div class="word" data-type="determinant" data-subtype="indefini" data-gender="masculin" data-number="singulier">Aucun</div>
+          <div class="word" data-type="determinant" data-subtype="indefini" data-gender="feminin" data-number="singulier">Aucune</div>
+          <div class="word" data-type="determinant" data-subtype="indefini" data-gender="masculin" data-number="singulier">Certain</div>
+          <div class="word" data-type="determinant" data-subtype="indefini" data-gender="feminin" data-number="singulier">Certaine</div>
+          <div class="word" data-type="determinant" data-subtype="indefini" data-gender="masculin" data-number="pluriel">Certains</div>
+          <div class="word" data-type="determinant" data-subtype="indefini" data-gender="feminin" data-number="pluriel">Certaines</div>
+          <div class="word" data-type="determinant" data-subtype="indefini" data-gender="mixte" data-number="singulier">Chaque</div>
+          <div class="word" data-type="determinant" data-subtype="indefini" data-gender="mixte" data-number="pluriel">Plusieurs</div>
+          <div class="word" data-type="determinant" data-subtype="indefini" data-gender="mixte" data-number="singulier">Quelque</div>
+          <div class="word" data-type="determinant" data-subtype="indefini" data-gender="mixte" data-number="pluriel">Quelques</div>
+        </div>
+      <div class="subcategory"> 
+      <strong>numeraux</strong>
+          <div class="word" data-type="determinant" data-subtype="numeraux" data-gender="mixte" data-number="pluriel">Deux</div>
+          <div class="word" data-type="determinant" data-subtype="numeraux" data-gender="mixte" data-number="pluriel">Trois</div>
+      </div>
+    </div>
+    </div>
+
+    <div class="category">
+      <h4 onclick="toggleCategory(this)">
+        <span>Noms</span>
+        <span class="category-toggle">▶</span>
+      </h4>
+      <div class="category-content">
+        <div class="subcategory">
+          <strong>Communs</strong>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="masculin" data-plural="chats">chat</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="masculin" data-plural="chiens">chien</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="masculin" data-plural="oiseaux">oiseau</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="feminin" data-plural="souris">souris</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="masculin" data-plural="canapés">canapé</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="feminin" data-plural="tables">table</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="feminin" data-plural="chaises">chaise</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="masculin" data-plural="livres">livre</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="feminin" data-plural="écoles">école</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="feminin" data-plural="maisons">maison</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="masculin" data-plural="jardins">jardin</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="epicene" data-plural="élèves">élève</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="masculin" data-plural="professeurs">professeur</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="epicene" data-plural="enfants">enfant</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="masculin" data-plural="gâteaux">gâteau</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="feminin" data-plural="pommes">pomme</div>
+          <div class="word" data-type="nom" data-subtype="commun" data-gender="feminin" data-plural="voitures">voiture</div>
+        </div>
+        <div class="subcategory">
+          <strong>Propres</strong>
+          <div class="word" data-type="nom" data-subtype="propre">Marie</div>
+          <div class="word" data-type="nom" data-subtype="propre">Paul</div>
+          <div class="word" data-type="nom" data-subtype="propre">Sophie</div>
+          <div class="word" data-type="nom" data-subtype="propre">Lucas</div>
+          <div class="word" data-type="nom" data-subtype="propre">Paris</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h4 onclick="toggleCategory(this)">
+        <span>Pronoms</span>
+        <span class="category-toggle">▶</span>
+      </h4>
+      <div class="category-content">
+        <div class="subcategory">
+          <strong>Personnels Sujets</strong>
+          <div class="word" data-type="pronom" data-subtype="personnel-sujet" data-person="je" data-number="singulier" data-elided="j'">je</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-sujet" data-person="tu" data-number="singulier">tu</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-sujet" data-person="il" data-number="singulier" data-gender="masculin">il</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-sujet" data-person="il" data-number="singulier" data-gender="feminin">elle</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-sujet" data-person="nous" data-number="pluriel">nous</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-sujet" data-person="vous" data-number="pluriel">vous</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-sujet" data-person="ils" data-number="pluriel" data-gender="masculin">ils</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-sujet" data-person="ils" data-number="pluriel" data-gender="feminin">elles</div>
+        </div>
+        <div class="subcategory">
+          <strong>Personnels Compléments</strong>
+          <div class="word" data-type="pronom" data-subtype="personnel-complement" data-elided="m'">me</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-complement" data-elided="t'">te</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-complement" data-elided="l'">le</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-complement">la</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-complement">lui</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-complement">nous</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-complement">vous</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-complement">les</div>
+          <div class="word" data-type="pronom" data-subtype="personnel-complement">leur</div>
+        </div>
+        <div class="subcategory">
+          <strong>Relatifs</strong>
+          <div class="word" data-type="pronom" data-subtype="relatif">qui</div>
+          <div class="word" data-type="pronom" data-subtype="relatif" data-elided="qu'">que</div>
+          <div class="word" data-type="pronom" data-subtype="relatif">dont</div>
+          <div class="word" data-type="pronom" data-subtype="relatif">où</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h4 onclick="toggleCategory(this)">
+        <span>Verbes</span>
+        <span class="category-toggle">▶</span>
+      </h4>
+            <div class="category-content">
+        <div class="subcategory"><strong>D'état</strong>
+          <div class="word" data-type="verbe" data-subtype="etat" data-infinitive="être" 
+            data-present-je="suis" data-present-tu="es" data-present-il="est" data-present-nous="sommes" data-present-vous="êtes" data-present-ils="sont" 
+            data-imparfait-je="étais" data-imparfait-tu="étais" data-imparfait-il="était" data-imparfait-nous="étions" data-imparfait-vous="étiez" data-imparfait-ils="étaient" 
+            data-ps-je="fus" data-ps-tu="fus" data-ps-il="fut" data-ps-nous="fûmes" data-ps-vous="fûtes" data-ps-ils="furent" 
+            data-futur-je="serai" data-futur-tu="seras" data-futur-il="sera" data-futur-nous="serons" data-futur-vous="serez" data-futur-ils="seront" 
+            data-pc-je="ai été" data-pc-tu="as été" data-pc-il="a été" data-pc-nous="avons été" data-pc-vous="avez été" data-pc-ils="ont été" 
+            data-pqp-je="avais été" data-pqp-tu="avais été" data-pqp-il="avait été" data-pqp-nous="avions été" data-pqp-vous="aviez été" data-pqp-ils="avaient été" 
+            data-pa-je="eus été" data-pa-tu="eus été" data-pa-il="eut été" data-pa-nous="eûmes été" data-pa-vous="eûtes été" data-pa-ils="eurent été" 
+            data-futura-je="aurai été" data-futura-tu="auras été" data-futura-il="aura été" data-futura-nous="aurons été" data-futura-vous="aurez été" data-futura-ils="auront été" 
+            data-cond-je="serais" data-cond-tu="serais" data-cond-il="serait" data-cond-nous="serions" data-cond-vous="seriez" data-cond-ils="seraient" 
+            data-condp-je="aurais été" data-condp-tu="aurais été" data-condp-il="aurait été" data-condp-nous="aurions été" data-condp-vous="auriez été" data-condp-ils="auraient été" 
+            data-participe-present="étant" 
+            data-participe-passe="été" 
+            data-subjonctif-present-je="que je sois" data-subjonctif-present-tu="que tu sois" data-subjonctif-present-il="qu'il soit" data-subjonctif-present-nous="que nous soyons" data-subjonctif-present-vous="que vous soyez" data-subjonctif-present-ils="qu'ils soient" 
+            data-subjonctif-imparfait-je="que je fusse" data-subjonctif-imparfait-tu="que tu fusses" data-subjonctif-imparfait-il="qu'il fût" data-subjonctif-imparfait-nous="que nous fussions" data-subjonctif-imparfait-vous="que vous fussiez" data-subjonctif-imparfait-ils="qu'ils fussent" 
+            data-subjonctif-passe-je="que j'aie été" data-subjonctif-passe-tu="que tu aies été" data-subjonctif-passe-il="qu'il ait été" data-subjonctif-passe-nous="que nous ayons été" data-subjonctif-passe-vous="que vous ayez été" data-subjonctif-passe-ils="qu'ils aient été" 
+            data-subjonctif-plusqueparfait-je="que j'eusse été" data-subjonctif-plusqueparfait-tu="que tu eusses été" data-subjonctif-plusqueparfait-il="qu'il eût été" data-subjonctif-plusqueparfait-nous="que nous eussions été" data-subjonctif-plusqueparfait-vous="que vous eussiez été" data-subjonctif-plusqueparfait-ils="qu'ils eussent été">être</div>
+          <div class="word" data-type="verbe" data-subtype="etat" data-infinitive="rester" 
+            data-present-je="reste" data-present-tu="restes" data-present-il="reste" data-present-nous="restons" data-present-vous="restez" data-present-ils="restent" 
+            data-imparfait-je="restais" data-imparfait-tu="restais" data-imparfait-il="restait" data-imparfait-nous="restions" data-imparfait-vous="restiez" data-imparfait-ils="restaient" 
+            data-ps-je="restai" data-ps-tu="restas" data-ps-il="resta" data-ps-nous="restâmes" data-ps-vous="restâtes" data-ps-ils="restèrent" 
+            data-futur-je="resterai" data-futur-tu="resteras" data-futur-il="restera" data-futur-nous="resterons" data-futur-vous="resterez" data-futur-ils="resteront" 
+            data-pc-je="suis resté" data-pc-tu="es resté" data-pc-il="est resté" data-pc-nous="sommes restés" data-pc-vous="êtes restés" data-pc-ils="sont restés" 
+            data-pqp-je="étais resté" data-pqp-tu="étais resté" data-pqp-il="était resté" data-pqp-nous="étions restés" data-pqp-vous="étiez restés" data-pqp-ils="étaient restés" 
+            data-pa-je="fus resté" data-pa-tu="fus resté" data-pa-il="fut resté" data-pa-nous="fûmes restés" data-pa-vous="fûtes restés" data-pa-ils="furent restés" 
+            data-futura-je="serai resté" data-futura-tu="seras resté" data-futura-il="sera resté" data-futura-nous="serons restés" data-futura-vous="serez restés" data-futura-ils="seront restés" 
+            data-cond-je="resterais" data-cond-tu="resterais" data-cond-il="resterait" data-cond-nous="resterions" data-cond-vous="resteriez" data-cond-ils="resteraient" 
+            data-condp-je="serais resté" data-condp-tu="serais resté" data-condp-il="serait resté" data-condp-nous="serions restés" data-condp-vous="seriez restés" data-condp-ils="seraient restés" 
+            data-participe-present="restant" 
+            data-participe-passe="resté" 
+            data-subjonctif-present-je="que je reste" data-subjonctif-present-tu="que tu restes" data-subjonctif-present-il="qu'il reste" data-subjonctif-present-nous="que nous restions" data-subjonctif-present-vous="que vous restiez" data-subjonctif-present-ils="qu'ils restent" 
+            data-subjonctif-imparfait-je="que je restasse" data-subjonctif-imparfait-tu="que tu restasses" data-subjonctif-imparfait-il="qu'il restât" data-subjonctif-imparfait-nous="que nous restassions" data-subjonctif-imparfait-vous="que vous restassiez" data-subjonctif-imparfait-ils="qu'ils restassent" 
+            data-subjonctif-passe-je="que je sois resté" data-subjonctif-passe-tu="que tu sois resté" data-subjonctif-passe-il="qu'il soit resté" data-subjonctif-passe-nous="que nous soyons restés" data-subjonctif-passe-vous="que vous soyez restés" data-subjonctif-passe-ils="qu'ils soient restés" 
+            data-subjonctif-plusqueparfait-je="que je fusse resté" data-subjonctif-plusqueparfait-tu="que tu fusses resté" data-subjonctif-plusqueparfait-il="qu'il fût resté" data-subjonctif-plusqueparfait-nous="que nous fussions restés" data-subjonctif-plusqueparfait-vous="que vous fussiez restés" data-subjonctif-plusqueparfait-ils="qu'ils fussent restés">rester</div>
+          <div class="word" data-type="verbe" data-subtype="etat" data-infinitive="sembler" 
+          data-present-je="semble" data-present-tu="sembles" data-present-il="semble" data-present-nous="semblons" data-present-vous="semblez" data-present-ils="semblent" 
+          data-imparfait-je="semblais" data-imparfait-tu="semblais" data-imparfait-il="semblait" data-imparfait-nous="semblions" data-imparfait-vous="sembliez" data-imparfait-ils="semblaient" 
+          data-ps-je="semblai" data-ps-tu="semblas" data-ps-il="sembla" data-ps-nous="semblâmes" data-ps-vous="semblâtes" data-ps-ils="semblèrent" 
+          data-futur-je="semblerai" data-futur-tu="sembleras" data-futur-il="semblera" data-futur-nous="semblerons" data-futur-vous="semblerez" data-futur-ils="sembleront" 
+          data-pc-je="ai semblé" data-pc-tu="as semblé" data-pc-il="a semblé" data-pc-nous="avons semblé" data-pc-vous="avez semblé" data-pc-ils="ont semblé" 
+          data-pqp-je="avais semblé" data-pqp-tu="avais semblé" data-pqp-il="avait semblé" data-pqp-nous="avions semblé" data-pqp-vous="aviez semblé" data-pqp-ils="avaient semblé" 
+          data-pa-je="eus semblé" data-pa-tu="eus semblé" data-pa-il="eut semblé" data-pa-nous="eûmes semblé" data-pa-vous="eûtes semblé" data-pa-ils="eurent semblé" 
+          data-futura-je="aurai semblé" data-futura-tu="auras semblé" data-futura-il="aura semblé" data-futura-nous="aurons semblé" data-futura-vous="aurez semblé" data-futura-ils="auront semblé" 
+          data-cond-je="semblerais" data-cond-tu="semblerais" data-cond-il="semblerait" data-cond-nous="semblerions" data-cond-vous="sembleriez" data-cond-ils="sembleraient" 
+          data-condp-je="aurais semblé" data-condp-tu="aurais semblé" data-condp-il="aurait semblé" data-condp-nous="aurions semblé" data-condp-vous="auriez semblé" data-condp-ils="auraient semblé" 
+          data-participe-present="semblant" 
+          data-participe-passe="semblé" 
+          data-subjonctif-present-je="que je semble" data-subjonctif-present-tu="que tu sembles" data-subjonctif-present-il="qu'il semble" data-subjonctif-present-nous="que nous semblions" data-subjonctif-present-vous="que vous sembliez" data-subjonctif-present-ils="qu'ils semblent" 
+          data-subjonctif-imparfait-je="que je semblasse" data-subjonctif-imparfait-tu="que tu semblasses" data-subjonctif-imparfait-il="qu'il semblât" data-subjonctif-imparfait-nous="que nous semblassions" data-subjonctif-imparfait-vous="que vous semblassiez" data-subjonctif-imparfait-ils="qu'ils semblassent" 
+          data-subjonctif-passe-je="que j'aie semblé" data-subjonctif-passe-tu="que tu aies semblé" data-subjonctif-passe-il="qu'il ait semblé" data-subjonctif-passe-nous="que nous ayons semblé" data-subjonctif-passe-vous="que vous ayez semblé" data-subjonctif-passe-ils="qu'ils aient semblé" 
+          data-subjonctif-plusqueparfait-je="que j'eusse semblé" data-subjonctif-plusqueparfait-tu="que tu eusses semblé" data-subjonctif-plusqueparfait-il="qu'il eût semblé" data-subjonctif-plusqueparfait-nous="que nous eussions semblé" data-subjonctif-plusqueparfait-vous="que vous eussiez semblé" data-subjonctif-plusqueparfait-ils="qu'ils eussent semblé">sembler</div>
+          <div class="word" data-type="verbe" data-subtype="etat" data-infinitive="paraître"
+          data-present-je="parais" data-present-tu="parais" data-present-il="paraît" data-present-nous="paraissons" data-present-vous="paraissez" data-present-ils="paraissent" 
+          data-imparfait-je="paraissais" data-imparfait-tu="paraissais" data-imparfait-il="paraissait" data-imparfait-nous="paraissions" data-imparfait-vous="paraissiez" data-imparfait-ils="paraissaient" 
+          data-ps-je="parus" data-ps-tu="parus" data-ps-il="parut" data-ps-nous="parûmes" data-ps-vous="parûtes" data-ps-ils="parurent" 
+          data-futur-je="paraîtrai" data-futur-tu="paraîtras" data-futur-il="paraîtra" data-futur-nous="paraîtrons" data-futur-vous="paraîtrez" data-futur-ils="paraîtront" 
+          data-pc-je="ai paru" data-pc-tu="as paru" data-pc-il="a paru" data-pc-nous="avons paru" data-pc-vous="avez paru" data-pc-ils="ont paru" 
+          data-pqp-je="avais paru" data-pqp-tu="avais paru" data-pqp-il="avait paru" data-pqp-nous="avions paru" data-pqp-vous="aviez paru" data-pqp-ils="avaient paru" 
+          data-pa-je="eus paru" data-pa-tu="eus paru" data-pa-il="eut paru" data-pa-nous="eûmes paru" data-pa-vous="eûtes paru" data-pa-ils="eurent paru" 
+          data-futura-je="aurai paru" data-futura-tu="auras paru" data-futura-il="aura paru" data-futura-nous="aurons paru" data-futura-vous="aurez paru" data-futura-ils="auront paru" 
+          data-cond-je="paraîtrais" data-cond-tu="paraîtrais" data-cond-il="paraîtrait" data-cond-nous="paraîtrions" data-cond-vous="paraîtriez" data-cond-ils="paraîtraient" 
+          data-condp-je="aurais paru" data-condp-tu="aurais paru" data-condp-il="aurait paru" data-condp-nous="aurions paru" data-condp-vous="auriez paru" data-condp-ils="auraient paru" 
+          data-participe-present="paraissant" 
+          data-participe-passe="paru" 
+          data-subjonctif-present-je="que je paraisse" data-subjonctif-present-tu="que tu paraisses" data-subjonctif-present-il="qu'il paraisse" data-subjonctif-present-nous="que nous paraissions" data-subjonctif-present-vous="que vous paraissiez" data-subjonctif-present-ils="qu'ils paraissent" 
+          data-subjonctif-imparfait-je="que je parusse" data-subjonctif-imparfait-tu="que tu parusses" data-subjonctif-imparfait-il="qu'il parût" data-subjonctif-imparfait-nous="que nous parussions" data-subjonctif-imparfait-vous="que vous parussiez" data-subjonctif-imparfait-ils="qu'ils parussent" 
+          data-subjonctif-passe-je="que j'aie paru" data-subjonctif-passe-tu="que tu aies paru" data-subjonctif-passe-il="qu'il ait paru" data-subjonctif-passe-nous="que nous ayons paru" data-subjonctif-passe-vous="que vous ayez paru" data-subjonctif-passe-ils="qu'ils aient paru" 
+          data-subjonctif-plusqueparfait-je="que j'eusse paru" data-subjonctif-plusqueparfait-tu="que tu eusses paru" data-subjonctif-plusqueparfait-il="qu'il eût paru" data-subjonctif-plusqueparfait-nous="que nous eussions paru" data-subjonctif-plusqueparfait-vous="que vous eussiez paru" data-subjonctif-plusqueparfait-ils="qu'ils eussent paru">paraître</div>
+        </div>
+        <div class="subcategory"><strong>Intransitifs</strong>
+          <div class="word" data-type="verbe" data-subtype="intransitif" data-infinitive="dormir" 
+            data-present-je="dors" data-present-tu="dors" data-present-il="dort" data-present-nous="dormons" data-present-vous="dormez" data-present-ils="dorment" 
+            data-imparfait-je="dormais" data-imparfait-tu="dormais" data-imparfait-il="dormait" data-imparfait-nous="dormions" data-imparfait-vous="dormiez" data-imparfait-ils="dormaient" 
+            data-ps-je="dormis" data-ps-tu="dormis" data-ps-il="dormit" data-ps-nous="dormîmes" data-ps-vous="dormîtes" data-ps-ils="dormirent" 
+            data-futur-je="dormirai" data-futur-tu="dormiras" data-futur-il="dormira" data-futur-nous="dormirons" data-futur-vous="dormirez" data-futur-ils="dormiront" 
+            data-pc-je="ai dormi" data-pc-tu="as dormi" data-pc-il="a dormi" data-pc-nous="avons dormi" data-pc-vous="avez dormi" data-pc-ils="ont dormi" 
+            data-pqp-je="avais dormi" data-pqp-tu="avais dormi" data-pqp-il="avait dormi" data-pqp-nous="avions dormi" data-pqp-vous="aviez dormi" data-pqp-ils="avaient dormi" 
+            data-pa-je="eus dormi" data-pa-tu="eus dormi" data-pa-il="eut dormi" data-pa-nous="eûmes dormi" data-pa-vous="eûtes dormi" data-pa-ils="eurent dormi" 
+            data-futura-je="aurai dormi" data-futura-tu="auras dormi" data-futura-il="aura dormi" data-futura-nous="aurons dormi" data-futura-vous="aurez dormi" data-futura-ils="auront dormi" 
+            data-cond-je="dormirais" data-cond-tu="dormirais" data-cond-il="dormirait" data-cond-nous="dormirions" data-cond-vous="dormiriez" data-cond-ils="dormiraient" 
+            data-condp-je="aurais dormi" data-condp-tu="aurais dormi" data-condp-il="aurait dormi" data-condp-nous="aurions dormi" data-condp-vous="auriez dormi" data-condp-ils="auraient dormi" 
+            data-participe-present="dormant" 
+            data-participe-passe="dormi" 
+            data-subjonctif-present-je="que je dorme" data-subjonctif-present-tu="que tu dormes" data-subjonctif-present-il="qu'il dorme" data-subjonctif-present-nous="que nous dormions" data-subjonctif-present-vous="que vous dormiez" data-subjonctif-present-ils="qu'ils dorment" 
+            data-subjonctif-imparfait-je="que je dormisse" data-subjonctif-imparfait-tu="que tu dormisses" data-subjonctif-imparfait-il="qu'il dormît" data-subjonctif-imparfait-nous="que nous dormissions" data-subjonctif-imparfait-vous="que vous dormissiez" data-subjonctif-imparfait-ils="qu'ils dormissent" 
+            data-subjonctif-passe-je="que j'aie dormi" data-subjonctif-passe-tu="que tu aies dormi" data-subjonctif-passe-il="qu'il ait dormi" data-subjonctif-passe-nous="que nous ayons dormi" data-subjonctif-passe-vous="que vous ayez dormi" data-subjonctif-passe-ils="qu'ils aient dormi" 
+            data-subjonctif-plusqueparfait-je="que j'eusse dormi" data-subjonctif-plusqueparfait-tu="que tu eusses dormi" data-subjonctif-plusqueparfait-il="qu'il eût dormi" data-subjonctif-plusqueparfait-nous="que nous eussions dormi" data-subjonctif-plusqueparfait-vous="que vous eussiez dormi" data-subjonctif-plusqueparfait-ils="qu'ils eussent dormi">dormir</div>
+          <div class="word" data-type="verbe" data-subtype="intransitif" data-infinitive="courir" 
+          data-present-je="cours" data-present-tu="cours" data-present-il="court" data-present-nous="courons" data-present-vous="courez" data-present-ils="courent" 
+          data-imparfait-je="courais" data-imparfait-tu="courais" data-imparfait-il="courait" data-imparfait-nous="courions" data-imparfait-vous="couriez" data-imparfait-ils="couraient" 
+          data-ps-je="courus" data-ps-tu="courus" data-ps-il="courut" data-ps-nous="courûmes" data-ps-vous="courûtes" data-ps-ils="coururent" 
+          data-futur-je="courrai" data-futur-tu="courras" data-futur-il="courra" data-futur-nous="courrons" data-futur-vous="courrez" data-futur-ils="courront" 
+          data-pc-je="ai couru" data-pc-tu="as couru" data-pc-il="a couru" data-pc-nous="avons couru" data-pc-vous="avez couru" data-pc-ils="ont couru" 
+          data-pqp-je="avais couru" data-pqp-tu="avais couru" data-pqp-il="avait couru" data-pqp-nous="avions couru" data-pqp-vous="aviez couru" data-pqp-ils="avaient couru" 
+          data-pa-je="eus couru" data-pa-tu="eus couru" data-pa-il="eut couru" data-pa-nous="eûmes couru" data-pa-vous="eûtes couru" data-pa-ils="eurent couru" 
+          data-futura-je="aurai couru" data-futura-tu="auras couru" data-futura-il="aura couru" data-futura-nous="aurons couru" data-futura-vous="aurez couru" data-futura-ils="auront couru" 
+          data-cond-je="courrais" data-cond-tu="courrais" data-cond-il="courrait" data-cond-nous="courrions" data-cond-vous="courriez" data-cond-ils="courraient" 
+          data-condp-je="aurais couru" data-condp-tu="aurais couru" data-condp-il="aurait couru" data-condp-nous="aurions couru" data-condp-vous="auriez couru" data-condp-ils="auraient couru" 
+          data-participe-present="courant" data-participe-passe="couru" 
+          data-subjonctif-present-je="que je coure" data-subjonctif-present-tu="que tu coures" data-subjonctif-present-il="qu'il coure" data-subjonctif-present-nous="que nous courions" data-subjonctif-present-vous="que vous couriez" data-subjonctif-present-ils="qu'ils courent" 
+          data-subjonctif-imparfait-je="que je courusse" data-subjonctif-imparfait-tu="que tu courusses" data-subjonctif-imparfait-il="qu'il courût" data-subjonctif-imparfait-nous="que nous courussions" data-subjonctif-imparfait-vous="que vous courussiez" data-subjonctif-imparfait-ils="qu'ils courussent" 
+          data-subjonctif-passe-je="que j'aie couru" data-subjonctif-passe-tu="que tu aies couru" data-subjonctif-passe-il="qu'il ait couru" data-subjonctif-passe-nous="que nous ayons couru" data-subjonctif-passe-vous="que vous ayez couru" data-subjonctif-passe-ils="qu'ils aient couru" 
+          data-subjonctif-plusqueparfait-je="que j'eusse couru" data-subjonctif-plusqueparfait-tu="que tu eusses couru" data-subjonctif-plusqueparfait-il="qu'il eût couru" data-subjonctif-plusqueparfait-nous="que nous eussions couru" data-subjonctif-plusqueparfait-vous="que vous eussiez couru" data-subjonctif-plusqueparfait-ils="qu'ils eussent couru">courir</div>
+          <div class="word" data-type="verbe" data-subtype="intransitif" data-infinitive="marcher" 
+          data-present-je="marche" data-present-tu="marches" data-present-il="marche" data-present-nous="marchons" data-present-vous="marchez" data-present-ils="marchent" 
+          data-imparfait-je="marchais" data-imparfait-tu="marchais" data-imparfait-il="marchait" data-imparfait-nous="marchions" data-imparfait-vous="marchiez" data-imparfait-ils="marchaient" 
+          data-ps-je="marchai" data-ps-tu="marchas" data-ps-il="marcha" data-ps-nous="marchâmes" data-ps-vous="marchâtes" data-ps-ils="marchèrent" 
+          data-futur-je="marcherai" data-futur-tu="marcheras" data-futur-il="marchera" data-futur-nous="marcherons" data-futur-vous="marcherez" data-futur-ils="marcheront" 
+          data-pc-je="ai marché" data-pc-tu="as marché" data-pc-il="a marché" data-pc-nous="avons marché" data-pc-vous="avez marché" data-pc-ils="ont marché" 
+          data-pqp-je="avais marché" data-pqp-tu="avais marché" data-pqp-il="avait marché" data-pqp-nous="avions marché" data-pqp-vous="aviez marché" data-pqp-ils="avaient marché" 
+          data-pa-je="eus marché" data-pa-tu="eus marché" data-pa-il="eut marché" data-pa-nous="eûmes marché" data-pa-vous="eûtes marché" data-pa-ils="eurent marché" data-futura-je="aurai marché" data-futura-tu="auras marché" data-futura-il="aura marché" data-futura-nous="aurons marché" data-futura-vous="aurez marché" data-futura-ils="auront marché" 
+          data-cond-je="marcherais" data-cond-tu="marcherais" data-cond-il="marcherait" data-cond-nous="marcherions" data-cond-vous="marcheriez" data-cond-ils="marcheraient" 
+          data-condp-je="aurais marché" data-condp-tu="aurais marché" data-condp-il="aurait marché" data-condp-nous="aurions marché" data-condp-vous="auriez marché" data-condp-ils="auraient marché" 
+          data-participe-present="marchant" data-participe-passe="marché" 
+          data-subjonctif-present-je="que je marche" data-subjonctif-present-tu="que tu marches" data-subjonctif-present-il="qu'il marche" data-subjonctif-present-nous="que nous marchions" data-subjonctif-present-vous="que vous marchiez" data-subjonctif-present-ils="qu'ils marchent" 
+          data-subjonctif-imparfait-je="que je marchasse" data-subjonctif-imparfait-tu="que tu marchasses" data-subjonctif-imparfait-il="qu'il marchât" data-subjonctif-imparfait-nous="que nous marchassions" data-subjonctif-imparfait-vous="que vous marchassiez" data-subjonctif-imparfait-ils="qu'ils marchassent" 
+          data-subjonctif-passe-je="que j'aie marché" data-subjonctif-passe-tu="que tu aies marché" data-subjonctif-passe-il="qu'il ait marché" data-subjonctif-passe-nous="que nous ayons marché" data-subjonctif-passe-vous="que vous ayez marché" data-subjonctif-passe-ils="qu'ils aient marché" 
+          data-subjonctif-plusqueparfait-je="que j'eusse marché" data-subjonctif-plusqueparfait-tu="que tu eusses marché" data-subjonctif-plusqueparfait-il="qu'il eût marché" data-subjonctif-plusqueparfait-nous="que nous eussions marché" data-subjonctif-plusqueparfait-vous="que vous eussiez marché" data-subjonctif-plusqueparfait-ils="qu'ils eussent marché">marcher</div>
+          <div class="word" data-type="verbe" data-subtype="intransitif" data-infinitive="sauter" 
+          data-present-je="saute" data-present-tu="sautes" data-present-il="saute" data-present-nous="sautons" data-present-vous="sautez" data-present-ils="sautent" 
+          data-imparfait-je="sautais" data-imparfait-tu="sautais" data-imparfait-il="sautait" data-imparfait-nous="sautions" data-imparfait-vous="sautiez" data-imparfait-ils="sautaient" 
+          data-ps-je="sautai" data-ps-tu="sautas" data-ps-il="sauta" data-ps-nous="sautâmes" data-ps-vous="sautâtes" data-ps-ils="sautèrent" 
+          data-futur-je="sauterai" data-futur-tu="sauteras" data-futur-il="sautera" data-futur-nous="sauterons" data-futur-vous="sauterez" data-futur-ils="sauteront" 
+          data-pc-je="ai sauté" data-pc-tu="as sauté" data-pc-il="a sauté" data-pc-nous="avons sauté" data-pc-vous="avez sauté" data-pc-ils="ont sauté" 
+          data-pqp-je="avais sauté" data-pqp-tu="avais sauté" data-pqp-il="avait sauté" data-pqp-nous="avions sauté" data-pqp-vous="aviez sauté" data-pqp-ils="avaient sauté" 
+          data-pa-je="eus sauté" data-pa-tu="eus sauté" data-pa-il="eut sauté" data-pa-nous="eûmes sauté" data-pa-vous="eûtes sauté" data-pa-ils="eurent sauté" 
+          data-futura-je="aurai sauté" data-futura-tu="auras sauté" data-futura-il="aura sauté" data-futura-nous="aurons sauté" data-futura-vous="aurez sauté" data-futura-ils="auront sauté" 
+          data-cond-je="sauterais" data-cond-tu="sauterais" data-cond-il="sauterait" data-cond-nous="sauterions" data-cond-vous="sauteriez" data-cond-ils="sauteraient" 
+          data-condp-je="aurais sauté" data-condp-tu="aurais sauté" data-condp-il="aurait sauté" data-condp-nous="aurions sauté" data-condp-vous="auriez sauté" data-condp-ils="auraient sauté" 
+          data-participe-present="sautant" data-participe-passe="sauté" 
+          data-subjonctif-present-je="que je saute" data-subjonctif-present-tu="que tu sautes" data-subjonctif-present-il="qu'il saute" data-subjonctif-present-nous="que nous sautions" data-subjonctif-present-vous="que vous sautiez" data-subjonctif-present-ils="qu'ils sautent" 
+          data-subjonctif-imparfait-je="que je sautasse" data-subjonctif-imparfait-tu="que tu sautasses" data-subjonctif-imparfait-il="qu'il sautât" data-subjonctif-imparfait-nous="que nous sautassions" data-subjonctif-imparfait-vous="que vous sautassiez" data-subjonctif-imparfait-ils="qu'ils sautassent" 
+          data-subjonctif-passe-je="que j'aie sauté" data-subjonctif-passe-tu="que tu aies sauté" data-subjonctif-passe-il="qu'il ait sauté" data-subjonctif-passe-nous="que nous ayons sauté" data-subjonctif-passe-vous="que vous ayez sauté" data-subjonctif-passe-ils="qu'ils aient sauté" 
+          data-subjonctif-plusqueparfait-je="que j'eusse sauté" data-subjonctif-plusqueparfait-tu="que tu eusses sauté" data-subjonctif-plusqueparfait-il="qu'il eût sauté" data-subjonctif-plusqueparfait-nous="que nous eussions sauté" data-subjonctif-plusqueparfait-vous="que vous eussiez sauté" data-subjonctif-plusqueparfait-ils="qu'ils eussent sauté">sauter</div>
+          <div class="word" data-type="verbe" data-subtype="intransitif" data-infinitive="arriver" 
+          data-present-je="arrive" data-present-tu="arrives" data-present-il="arrive" data-present-nous="arrivons" data-present-vous="arrivez" data-present-ils="arrivent" data-imparfait-je="arrivais" data-imparfait-tu="arrivais" data-imparfait-il="arrivait" data-imparfait-nous="arrivions" data-imparfait-vous="arriviez" data-imparfait-ils="arrivaient" data-ps-je="arrivai" data-ps-tu="arrivas" data-ps-il="arriva" data-ps-nous="arrivâmes" data-ps-vous="arrivâtes" data-ps-ils="arrivèrent" data-futur-je="arriverai" data-futur-tu="arriveras" data-futur-il="arrivera" data-futur-nous="arriverons" data-futur-vous="arriverez" data-futur-ils="arriveront" data-pc-je="suis arrivé" data-pc-tu="es arrivé" data-pc-il="est arrivé" data-pc-nous="sommes arrivés" data-pc-vous="êtes arrivés" data-pc-ils="sont arrivés" data-pqp-je="étais arrivé" data-pqp-tu="étais arrivé" data-pqp-il="était arrivé" data-pqp-nous="étions arrivés" data-pqp-vous="étiez arrivés" data-pqp-ils="étaient arrivés" data-pa-je="fus arrivé" data-pa-tu="fus arrivé" data-pa-il="fut arrivé" data-pa-nous="fûmes arrivés" data-pa-vous="fûtes arrivés" data-pa-ils="furent arrivés" data-futura-je="serai arrivé" data-futura-tu="seras arrivé" data-futura-il="sera arrivé" data-futura-nous="serons arrivés" data-futura-vous="serez arrivés" data-futura-ils="seront arrivés" data-cond-je="arriverais" data-cond-tu="arriverais" data-cond-il="arriverait" data-cond-nous="arriverions" data-cond-vous="arriveriez" data-cond-ils="arriveraient" data-condp-je="serais arrivé" data-condp-tu="serais arrivé" data-condp-il="serait arrivé" data-condp-nous="serions arrivés" data-condp-vous="seriez arrivés" data-condp-ils="seraient arrivés" data-participe-present="arrivant" data-participe-passe="arrivé" data-subjonctif-present-je="que j'arrive" data-subjonctif-present-tu="que tu arrives" data-subjonctif-present-il="qu'il arrive" data-subjonctif-present-nous="que nous arrivions" data-subjonctif-present-vous="que vous arriviez" data-subjonctif-present-ils="qu'ils arrivent" data-subjonctif-imparfait-je="que j'arrivasse" data-subjonctif-imparfait-tu="que tu arrivasses" data-subjonctif-imparfait-il="qu'il arrivât" data-subjonctif-imparfait-nous="que nous arrivassions" data-subjonctif-imparfait-vous="que vous arrivassiez" data-subjonctif-imparfait-ils="qu'ils arrivassent" data-subjonctif-passe-je="que je sois arrivé" data-subjonctif-passe-tu="que tu sois arrivé" data-subjonctif-passe-il="qu'il soit arrivé" data-subjonctif-passe-nous="que nous soyons arrivés" data-subjonctif-passe-vous="que vous soyez arrivés" data-subjonctif-passe-ils="qu'ils soient arrivés" data-subjonctif-plusqueparfait-je="que je fusse arrivé" data-subjonctif-plusqueparfait-tu="que tu fusses arrivé" data-subjonctif-plusqueparfait-il="qu'il fût arrivé" data-subjonctif-plusqueparfait-nous="que nous fussions arrivés" data-subjonctif-plusqueparfait-vous="que vous fussiez arrivés" data-subjonctif-plusqueparfait-ils="qu'ils fussent arrivés">arriver</div>
+          <div class="word" data-type="verbe" data-subtype="intransitif" data-infinitive="partir" 
+          data-present-je="pars" data-present-tu="pars" data-present-il="part" data-present-nous="partons" data-present-vous="partez" data-present-ils="partent" data-imparfait-je="partais" data-imparfait-tu="partais" data-imparfait-il="partait" data-imparfait-nous="partions" data-imparfait-vous="partiez" data-imparfait-ils="partaient" data-ps-je="partis" data-ps-tu="partis" data-ps-il="partit" data-ps-nous="partîmes" data-ps-vous="partîtes" data-ps-ils="partirent" data-futur-je="partirai" data-futur-tu="partiras" data-futur-il="partira" data-futur-nous="partirons" data-futur-vous="partirez" data-futur-ils="partiront" data-pc-je="suis parti" data-pc-tu="es parti" data-pc-il="est parti" data-pc-nous="sommes partis" data-pc-vous="êtes partis" data-pc-ils="sont partis" data-pqp-je="étais parti" data-pqp-tu="étais parti" data-pqp-il="était parti" data-pqp-nous="étions partis" data-pqp-vous="étiez partis" data-pqp-ils="étaient partis" data-pa-je="fus parti" data-pa-tu="fus parti" data-pa-il="fut parti" data-pa-nous="fûmes partis" data-pa-vous="fûtes partis" data-pa-ils="furent partis" data-futura-je="serai parti" data-futura-tu="seras parti" data-futura-il="sera parti" data-futura-nous="serons partis" data-futura-vous="serez partis" data-futura-ils="seront partis" data-cond-je="partirais" data-cond-tu="partirais" data-cond-il="partirait" data-cond-nous="partirions" data-cond-vous="partiriez" data-cond-ils="partiraient" data-condp-je="serais parti" data-condp-tu="serais parti" data-condp-il="serait parti" data-condp-nous="serions partis" data-condp-vous="seriez partis" data-condp-ils="seraient partis" data-participe-present="partant" data-participe-passe="parti" data-subjonctif-present-je="que je parte" data-subjonctif-present-tu="que tu partes" data-subjonctif-present-il="qu'il parte" data-subjonctif-present-nous="que nous partions" data-subjonctif-present-vous="que vous partiez" data-subjonctif-present-ils="qu'ils partent" data-subjonctif-imparfait-je="que je partisse" data-subjonctif-imparfait-tu="que tu partisses" data-subjonctif-imparfait-il="qu'il partît" data-subjonctif-imparfait-nous="que nous partissions" data-subjonctif-imparfait-vous="que vous partissiez" data-subjonctif-imparfait-ils="qu'ils partissent" data-subjonctif-passe-je="que je sois parti" data-subjonctif-passe-tu="que tu sois parti" data-subjonctif-passe-il="qu'il soit parti" data-subjonctif-passe-nous="que nous soyons partis" data-subjonctif-passe-vous="que vous soyez partis" data-subjonctif-passe-ils="qu'ils soient partis" data-subjonctif-plusqueparfait-je="que je fusse parti" data-subjonctif-plusqueparfait-tu="que tu fusses parti" data-subjonctif-plusqueparfait-il="qu'il fût parti" data-subjonctif-plusqueparfait-nous="que nous fussions partis" data-subjonctif-plusqueparfait-vous="que vous fussiez partis" data-subjonctif-plusqueparfait-ils="qu'ils fussent partis">partir</div>
+          <div class="word" data-type="verbe" data-subtype="intransitif" data-infinitive="jouer" 
+          data-present-je="joue" data-present-tu="joues" data-present-il="joue" data-present-nous="jouons" data-present-vous="jouez" data-present-ils="jouent" data-imparfait-je="jouais" data-imparfait-tu="jouais" data-imparfait-il="jouait" data-imparfait-nous="jouions" data-imparfait-vous="jouiez" data-imparfait-ils="jouaient" data-ps-je="jouai" data-ps-tu="jouas" data-ps-il="joua" data-ps-nous="jouâmes" data-ps-vous="jouâtes" data-ps-ils="jouèrent" data-futur-je="jouerai" data-futur-tu="joueras" data-futur-il="jouera" data-futur-nous="jouerons" data-futur-vous="jouerez" data-futur-ils="joueront" data-pc-je="ai joué" data-pc-tu="as joué" data-pc-il="a joué" data-pc-nous="avons joué" data-pc-vous="avez joué" data-pc-ils="ont joué" data-pqp-je="avais joué" data-pqp-tu="avais joué" data-pqp-il="avait joué" data-pqp-nous="avions joué" data-pqp-vous="aviez joué" data-pqp-ils="avaient joué" data-pa-je="eus joué" data-pa-tu="eus joué" data-pa-il="eut joué" data-pa-nous="eûmes joué" data-pa-vous="eûtes joué" data-pa-ils="eurent joué" data-futura-je="aurai joué" data-futura-tu="auras joué" data-futura-il="aura joué" data-futura-nous="aurons joué" data-futura-vous="aurez joué" data-futura-ils="auront joué" data-cond-je="jouerais" data-cond-tu="jouerais" data-cond-il="jouerait" data-cond-nous="jouerions" data-cond-vous="joueriez" data-cond-ils="joueraient" data-condp-je="aurais joué" data-condp-tu="aurais joué" data-condp-il="aurait joué" data-condp-nous="aurions joué" data-condp-vous="auriez joué" data-condp-ils="auraient joué" data-participe-present="jouant" data-participe-passe="joué" data-subjonctif-present-je="que je joue" data-subjonctif-present-tu="que tu joues" data-subjonctif-present-il="qu'il joue" data-subjonctif-present-nous="que nous jouions" data-subjonctif-present-vous="que vous jouiez" data-subjonctif-present-ils="qu'ils jouent" data-subjonctif-imparfait-je="que je jouasse" data-subjonctif-imparfait-tu="que tu jouasses" data-subjonctif-imparfait-il="qu'il jouât" data-subjonctif-imparfait-nous="que nous jouassions" data-subjonctif-imparfait-vous="que vous jouassiez" data-subjonctif-imparfait-ils="qu'ils jouassent" data-subjonctif-passe-je="que j'aie joué" data-subjonctif-passe-tu="que tu aies joué" data-subjonctif-passe-il="qu'il ait joué" data-subjonctif-passe-nous="que nous ayons joué" data-subjonctif-passe-vous="que vous ayez joué" data-subjonctif-passe-ils="qu'ils aient joué" data-subjonctif-plusqueparfait-je="que j'eusse joué" data-subjonctif-plusqueparfait-tu="que tu eusses joué" data-subjonctif-plusqueparfait-il="qu'il eût joué" data-subjonctif-plusqueparfait-nous="que nous eussions joué" data-subjonctif-plusqueparfait-vous="que vous eussiez joué" data-subjonctif-plusqueparfait-ils="qu'ils eussent joué">jouer</div>
+        </div>
+        <div class="subcategory"><strong>Transitifs directs</strong>
+          <div class="word" data-type="verbe" data-subtype="transitif-direct" data-infinitive="manger" 
+          data-present-je="mange" data-present-tu="manges" data-present-il="mange" data-present-nous="mangeons" data-present-vous="mangez" data-present-ils="mangent" data-imparfait-je="mangeais" data-imparfait-tu="mangeais" data-imparfait-il="mangeait" data-imparfait-nous="mangions" data-imparfait-vous="mangiez" data-imparfait-ils="mangeaient" data-ps-je="mangeai" data-ps-tu="mangeas" data-ps-il="mangea" data-ps-nous="mangeâmes" data-ps-vous="mangeâtes" data-ps-ils="mangèrent" data-futur-je="mangerai" data-futur-tu="mangeras" data-futur-il="mangera" data-futur-nous="mangerons" data-futur-vous="mangerez" data-futur-ils="mangeront" data-pc-je="ai mangé" data-pc-tu="as mangé" data-pc-il="a mangé" data-pc-nous="avons mangé" data-pc-vous="avez mangé" data-pc-ils="ont mangé" data-pqp-je="avais mangé" data-pqp-tu="avais mangé" data-pqp-il="avait mangé" data-pqp-nous="avions mangé" data-pqp-vous="aviez mangé" data-pqp-ils="avaient mangé" data-pa-je="eus mangé" data-pa-tu="eus mangé" data-pa-il="eut mangé" data-pa-nous="eûmes mangé" data-pa-vous="eûtes mangé" data-pa-ils="eurent mangé" data-futura-je="aurai mangé" data-futura-tu="auras mangé" data-futura-il="aura mangé" data-futura-nous="aurons mangé" data-futura-vous="aurez mangé" data-futura-ils="auront mangé" data-cond-je="mangerais" data-cond-tu="mangerais" data-cond-il="mangerait" data-cond-nous="mangerions" data-cond-vous="mangeriez" data-cond-ils="mangeraient" data-condp-je="aurais mangé" data-condp-tu="aurais mangé" data-condp-il="aurait mangé" data-condp-nous="aurions mangé" data-condp-vous="auriez mangé" data-condp-ils="auraient mangé" data-participe-present="mangeant" data-participe-passe="mangé" data-subjonctif-present-je="que je mange" data-subjonctif-present-tu="que tu manges" data-subjonctif-present-il="qu'il mange" data-subjonctif-present-nous="que nous mangions" data-subjonctif-present-vous="que vous mangiez" data-subjonctif-present-ils="qu'ils mangent" data-subjonctif-imparfait-je="que je mangeasse" data-subjonctif-imparfait-tu="que tu mangeasses" data-subjonctif-imparfait-il="qu'il mangeât" data-subjonctif-imparfait-nous="que nous mangeassions" data-subjonctif-imparfait-vous="que vous mangeassiez" data-subjonctif-imparfait-ils="qu'ils mangeassent" data-subjonctif-passe-je="que j'aie mangé" data-subjonctif-passe-tu="que tu aies mangé" data-subjonctif-passe-il="qu'il ait mangé" data-subjonctif-passe-nous="que nous ayons mangé" data-subjonctif-passe-vous="que vous ayez mangé" data-subjonctif-passe-ils="qu'ils aient mangé" data-subjonctif-plusqueparfait-je="que j'eusse mangé" data-subjonctif-plusqueparfait-tu="que tu eusses mangé" data-subjonctif-plusqueparfait-il="qu'il eût mangé" data-subjonctif-plusqueparfait-nous="que nous eussions mangé" data-subjonctif-plusqueparfait-vous="que vous eussiez mangé" data-subjonctif-plusqueparfait-ils="qu'ils eussent mangé">manger</div>
+          <div class="word" data-type="verbe" data-subtype="transitif-direct" data-infinitive="lire" 
+          data-present-je="lis" data-present-tu="lis" data-present-il="lit" data-present-nous="lisons" data-present-vous="lisez" data-present-ils="lisent" data-imparfait-je="lisais" data-imparfait-tu="lisais" data-imparfait-il="lisait" data-imparfait-nous="lisions" data-imparfait-vous="lisiez" data-imparfait-ils="lisaient" data-ps-je="lus" data-ps-tu="lus" data-ps-il="lut" data-ps-nous="lûmes" data-ps-vous="lûtes" data-ps-ils="lurent" data-futur-je="lirai" data-futur-tu="liras" data-futur-il="lira" data-futur-nous="lirons" data-futur-vous="lirez" data-futur-ils="liront" data-pc-je="ai lu" data-pc-tu="as lu" data-pc-il="a lu" data-pc-nous="avons lu" data-pc-vous="avez lu" data-pc-ils="ont lu" data-pqp-je="avais lu" data-pqp-tu="avais lu" data-pqp-il="avait lu" data-pqp-nous="avions lu" data-pqp-vous="aviez lu" data-pqp-ils="avaient lu" data-pa-je="eus lu" data-pa-tu="eus lu" data-pa-il="eut lu" data-pa-nous="eûmes lu" data-pa-vous="eûtes lu" data-pa-ils="eurent lu" data-futura-je="aurai lu" data-futura-tu="auras lu" data-futura-il="aura lu" data-futura-nous="aurons lu" data-futura-vous="aurez lu" data-futura-ils="auront lu" data-cond-je="lirais" data-cond-tu="lirais" data-cond-il="lirait" data-cond-nous="lirions" data-cond-vous="liriez" data-cond-ils="liraient" data-condp-je="aurais lu" data-condp-tu="aurais lu" data-condp-il="aurait lu" data-condp-nous="aurions lu" data-condp-vous="auriez lu" data-condp-ils="auraient lu" data-participe-present="lisant" data-participe-passe="lu" data-subjonctif-present-je="que je lise" data-subjonctif-present-tu="que tu lises" data-subjonctif-present-il="qu'il lise" data-subjonctif-present-nous="que nous lisions" data-subjonctif-present-vous="que vous lisiez" data-subjonctif-present-ils="qu'ils lisent" data-subjonctif-imparfait-je="que je lusse" data-subjonctif-imparfait-tu="que tu lusses" data-subjonctif-imparfait-il="qu'il lût" data-subjonctif-imparfait-nous="que nous lussions" data-subjonctif-imparfait-vous="que vous lussiez" data-subjonctif-imparfait-ils="qu'ils lussent" data-subjonctif-passe-je="que j'aie lu" data-subjonctif-passe-tu="que tu aies lu" data-subjonctif-passe-il="qu'il ait lu" data-subjonctif-passe-nous="que nous ayons lu" data-subjonctif-passe-vous="que vous ayez lu" data-subjonctif-passe-ils="qu'ils aient lu" data-subjonctif-plusqueparfait-je="que j'eusse lu" data-subjonctif-plusqueparfait-tu="que tu eusses lu" data-subjonctif-plusqueparfait-il="qu'il eût lu" data-subjonctif-plusqueparfait-nous="que nous eussions lu" data-subjonctif-plusqueparfait-vous="que vous eussiez lu" data-subjonctif-plusqueparfait-ils="qu'ils eussent lu">lire</div>
+          <div class="word" data-type="verbe" data-subtype="transitif-direct" data-infinitive="regarder" 
+          data-present-je="regarde" data-present-tu="regardes" data-present-il="regarde" data-present-nous="regardons" data-present-vous="regardez" data-present-ils="regardent" data-imparfait-je="regardais" data-imparfait-tu="regardais" data-imparfait-il="regardait" data-imparfait-nous="regardions" data-imparfait-vous="regardiez" data-imparfait-ils="regardaient" data-ps-je="regardai" data-ps-tu="regardas" data-ps-il="regarda" data-ps-nous="regardâmes" data-ps-vous="regardâtes" data-ps-ils="regardèrent" data-futur-je="regarderai" data-futur-tu="regarderas" data-futur-il="regardera" data-futur-nous="regarderons" data-futur-vous="regarderez" data-futur-ils="regarderont" data-pc-je="ai regardé" data-pc-tu="as regardé" data-pc-il="a regardé" data-pc-nous="avons regardé" data-pc-vous="avez regardé" data-pc-ils="ont regardé" data-pqp-je="avais regardé" data-pqp-tu="avais regardé" data-pqp-il="avait regardé" data-pqp-nous="avions regardé" data-pqp-vous="aviez regardé" data-pqp-ils="avaient regardé" data-pa-je="eus regardé" data-pa-tu="eus regardé" data-pa-il="eut regardé" data-pa-nous="eûmes regardé" data-pa-vous="eûtes regardé" data-pa-ils="eurent regardé" data-futura-je="aurai regardé" data-futura-tu="auras regardé" data-futura-il="aura regardé" data-futura-nous="aurons regardé" data-futura-vous="aurez regardé" data-futura-ils="auront regardé" data-cond-je="regarderais" data-cond-tu="regarderais" data-cond-il="regarderait" data-cond-nous="regarderions" data-cond-vous="regarderiez" data-cond-ils="regarderaient" data-condp-je="aurais regardé" data-condp-tu="aurais regardé" data-condp-il="aurait regardé" data-condp-nous="aurions regardé" data-condp-vous="auriez regardé" data-condp-ils="auraient regardé" data-participe-present="regardant" data-participe-passe="regardé" data-subjonctif-present-je="que je regarde" data-subjonctif-present-tu="que tu regardes" data-subjonctif-present-il="qu'il regarde" data-subjonctif-present-nous="que nous regardions" data-subjonctif-present-vous="que vous regardiez" data-subjonctif-present-ils="qu'ils regardent" data-subjonctif-imparfait-je="que je regardasse" data-subjonctif-imparfait-tu="que tu regardasses" data-subjonctif-imparfait-il="qu'il regardât" data-subjonctif-imparfait-nous="que nous regardassions" data-subjonctif-imparfait-vous="que vous regardassiez" data-subjonctif-imparfait-ils="qu'ils regardassent" data-subjonctif-passe-je="que j'aie regardé" data-subjonctif-passe-tu="que tu aies regardé" data-subjonctif-passe-il="qu'il ait regardé" data-subjonctif-passe-nous="que nous ayons regardé" data-subjonctif-passe-vous="que vous ayez regardé" data-subjonctif-passe-ils="qu'ils aient regardé" data-subjonctif-plusqueparfait-je="que j'eusse regardé" data-subjonctif-plusqueparfait-tu="que tu eusses regardé" data-subjonctif-plusqueparfait-il="qu'il eût regardé" data-subjonctif-plusqueparfait-nous="que nous eussions regardé" data-subjonctif-plusqueparfait-vous="que vous eussiez regardé" data-subjonctif-plusqueparfait-ils="qu'ils eussent regardé">regarder</div>
+          <div class="word" data-type="verbe" data-subtype="transitif-direct" data-infinitive="prendre" 
+          data-present-je="prends" data-present-tu="prends" data-present-il="prend" data-present-nous="prenons" data-present-vous="prenez" data-present-ils="prennent" data-imparfait-je="prenais" data-imparfait-tu="prenais" data-imparfait-il="prenait" data-imparfait-nous="prenions" data-imparfait-vous="preniez" data-imparfait-ils="prenaient" data-ps-je="pris" data-ps-tu="pris" data-ps-il="prit" data-ps-nous="prîmes" data-ps-vous="prîtes" data-ps-ils="prirent" data-futur-je="prendrai" data-futur-tu="prendras" data-futur-il="prendra" data-futur-nous="prendrons" data-futur-vous="prendrez" data-futur-ils="prendront" data-pc-je="ai pris" data-pc-tu="as pris" data-pc-il="a pris" data-pc-nous="avons pris" data-pc-vous="avez pris" data-pc-ils="ont pris" data-pqp-je="avais pris" data-pqp-tu="avais pris" data-pqp-il="avait pris" data-pqp-nous="avions pris" data-pqp-vous="aviez pris" data-pqp-ils="avaient pris" data-pa-je="eus pris" data-pa-tu="eus pris" data-pa-il="eut pris" data-pa-nous="eûmes pris" data-pa-vous="eûtes pris" data-pa-ils="eurent pris" data-futura-je="aurai pris" data-futura-tu="auras pris" data-futura-il="aura pris" data-futura-nous="aurons pris" data-futura-vous="aurez pris" data-futura-ils="auront pris" data-cond-je="prendrais" data-cond-tu="prendrais" data-cond-il="prendrait" data-cond-nous="prendrions" data-cond-vous="prendriez" data-cond-ils="prendraient" data-condp-je="aurais pris" data-condp-tu="aurais pris" data-condp-il="aurait pris" data-condp-nous="aurions pris" data-condp-vous="auriez pris" data-condp-ils="auraient pris" data-participe-present="prenant" data-participe-passe="pris" data-subjonctif-present-je="que je prenne" data-subjonctif-present-tu="que tu prennes" data-subjonctif-present-il="qu'il prenne" data-subjonctif-present-nous="que nous prenions" data-subjonctif-present-vous="que vous preniez" data-subjonctif-present-ils="qu'ils prennent" data-subjonctif-imparfait-je="que je prisse" data-subjonctif-imparfait-tu="que tu prisses" data-subjonctif-imparfait-il="qu'il prît" data-subjonctif-imparfait-nous="que nous prissions" data-subjonctif-imparfait-vous="que vous prissiez" data-subjonctif-imparfait-ils="qu'ils prissent" data-subjonctif-passe-je="que j'aie pris" data-subjonctif-passe-tu="que tu aies pris" data-subjonctif-passe-il="qu'il ait pris" data-subjonctif-passe-nous="que nous ayons pris" data-subjonctif-passe-vous="que vous ayez pris" data-subjonctif-passe-ils="qu'ils aient pris" data-subjonctif-plusqueparfait-je="que j'eusse pris" data-subjonctif-plusqueparfait-tu="que tu eusses pris" data-subjonctif-plusqueparfait-il="qu'il eût pris" data-subjonctif-plusqueparfait-nous="que nous eussions pris" data-subjonctif-plusqueparfait-vous="que vous eussiez pris" data-subjonctif-plusqueparfait-ils="qu'ils eussent pris">prendre</div>
+          <div class="word" data-type="verbe" data-subtype="transitif-direct" data-infinitive="voir" 
+          data-present-je="vois" data-present-tu="vois" data-present-il="voit" data-present-nous="voyons" data-present-vous="voyez" data-present-ils="voient" data-imparfait-je="voyais" data-imparfait-tu="voyais" data-imparfait-il="voyait" data-imparfait-nous="voyions" data-imparfait-vous="voyiez" data-imparfait-ils="voyaient" data-ps-je="vis" data-ps-tu="vis" data-ps-il="vit" data-ps-nous="vîmes" data-ps-vous="vîtes" data-ps-ils="virent" data-futur-je="verrai" data-futur-tu="verras" data-futur-il="verra" data-futur-nous="verrons" data-futur-vous="verrez" data-futur-ils="verront" data-pc-je="ai vu" data-pc-tu="as vu" data-pc-il="a vu" data-pc-nous="avons vu" data-pc-vous="avez vu" data-pc-ils="ont vu" data-pqp-je="avais vu" data-pqp-tu="avais vu" data-pqp-il="avait vu" data-pqp-nous="avions vu" data-pqp-vous="aviez vu" data-pqp-ils="avaient vu" data-pa-je="eus vu" data-pa-tu="eus vu" data-pa-il="eut vu" data-pa-nous="eûmes vu" data-pa-vous="eûtes vu" data-pa-ils="eurent vu" data-futura-je="aurai vu" data-futura-tu="auras vu" data-futura-il="aura vu" data-futura-nous="aurons vu" data-futura-vous="aurez vu" data-futura-ils="auront vu" data-cond-je="verrais" data-cond-tu="verrais" data-cond-il="verrait" data-cond-nous="verrions" data-cond-vous="verriez" data-cond-ils="verraient" data-condp-je="aurais vu" data-condp-tu="aurais vu" data-condp-il="aurait vu" data-condp-nous="aurions vu" data-condp-vous="auriez vu" data-condp-ils="auraient vu" data-participe-present="voyant" data-participe-passe="vu" data-subjonctif-present-je="que je voie" data-subjonctif-present-tu="que tu voies" data-subjonctif-present-il="qu'il voie" data-subjonctif-present-nous="que nous voyions" data-subjonctif-present-vous="que vous voyiez" data-subjonctif-present-ils="qu'ils voient" data-subjonctif-imparfait-je="que je visse" data-subjonctif-imparfait-tu="que tu visses" data-subjonctif-imparfait-il="qu'il vît" data-subjonctif-imparfait-nous="que nous vissions" data-subjonctif-imparfait-vous="que vous vissiez" data-subjonctif-imparfait-ils="qu'ils vissent" data-subjonctif-passe-je="que j'aie vu" data-subjonctif-passe-tu="que tu aies vu" data-subjonctif-passe-il="qu'il ait vu" data-subjonctif-passe-nous="que nous ayons vu" data-subjonctif-passe-vous="que vous ayez vu" data-subjonctif-passe-ils="qu'ils aient vu" data-subjonctif-plusqueparfait-je="que j'eusse vu" data-subjonctif-plusqueparfait-tu="que tu eusses vu" data-subjonctif-plusqueparfait-il="qu'il eût vu" data-subjonctif-plusqueparfait-nous="que nous eussions vu" data-subjonctif-plusqueparfait-vous="que vous eussiez vu" data-subjonctif-plusqueparfait-ils="qu'ils eussent vu">voir</div>
+          <div class="word" data-type="verbe" data-subtype="transitif-direct" data-infinitive="écrire" 
+          data-present-je="écris" data-present-tu="écris" data-present-il="écrit" data-present-nous="écrivons" data-present-vous="écrivez" data-present-ils="écrivent" data-imparfait-je="écrivais" data-imparfait-tu="écrivais" data-imparfait-il="écrivait" data-imparfait-nous="écrivions" data-imparfait-vous="écriviez" data-imparfait-ils="écrivaient" data-ps-je="écrivis" data-ps-tu="écrivis" data-ps-il="écrivit" data-ps-nous="écrivîmes" data-ps-vous="écrivîtes" data-ps-ils="écrivirent" data-futur-je="écrirai" data-futur-tu="écriras" data-futur-il="écrira" data-futur-nous="écrirons" data-futur-vous="écrirez" data-futur-ils="écriront" data-pc-je="ai écrit" data-pc-tu="as écrit" data-pc-il="a écrit" data-pc-nous="avons écrit" data-pc-vous="avez écrit" data-pc-ils="ont écrit" data-pqp-je="avais écrit" data-pqp-tu="avais écrit" data-pqp-il="avait écrit" data-pqp-nous="avions écrit" data-pqp-vous="aviez écrit" data-pqp-ils="avaient écrit" data-pa-je="eus écrit" data-pa-tu="eus écrit" data-pa-il="eut écrit" data-pa-nous="eûmes écrit" data-pa-vous="eûtes écrit" data-pa-ils="eurent écrit" data-futura-je="aurai écrit" data-futura-tu="auras écrit" data-futura-il="aura écrit" data-futura-nous="aurons écrit" data-futura-vous="aurez écrit" data-futura-ils="auront écrit" data-cond-je="écrirais" data-cond-tu="écrirais" data-cond-il="écrirait" data-cond-nous="écririons" data-cond-vous="écririez" data-cond-ils="écriraient" data-condp-je="aurais écrit" data-condp-tu="aurais écrit" data-condp-il="aurait écrit" data-condp-nous="aurions écrit" data-condp-vous="auriez écrit" data-condp-ils="auraient écrit" data-participe-present="écrivant" data-participe-passe="écrit" data-subjonctif-present-je="que j'écrive" data-subjonctif-present-tu="que tu écrives" data-subjonctif-present-il="qu'il écrive" data-subjonctif-present-nous="que nous écrivions" data-subjonctif-present-vous="que vous écriviez" data-subjonctif-present-ils="qu'ils écrivent" data-subjonctif-imparfait-je="que j'écrivisse" data-subjonctif-imparfait-tu="que tu écrivisses" data-subjonctif-imparfait-il="qu'il écrivît" data-subjonctif-imparfait-nous="que nous écrivissions" data-subjonctif-imparfait-vous="que vous écrivissiez" data-subjonctif-imparfait-ils="qu'ils écrivissent" data-subjonctif-passe-je="que j'aie écrit" data-subjonctif-passe-tu="que tu aies écrit" data-subjonctif-passe-il="qu'il ait écrit" data-subjonctif-passe-nous="que nous ayons écrit" data-subjonctif-passe-vous="que vous ayez écrit" data-subjonctif-passe-ils="qu'ils aient écrit" data-subjonctif-plusqueparfait-je="que j'eusse écrit" data-subjonctif-plusqueparfait-tu="que tu eusses écrit" data-subjonctif-plusqueparfait-il="qu'il eût écrit" data-subjonctif-plusqueparfait-nous="que nous eussions écrit" data-subjonctif-plusqueparfait-vous="que vous eussiez écrit" data-subjonctif-plusqueparfait-ils="qu'ils eussent écrit">écrire</div>
+          <div class="word" data-type="verbe" data-subtype="transitif-direct" data-infinitive="dessiner" 
+          data-present-je="dessine" data-present-tu="dessines" data-present-il="dessine" data-present-nous="dessinons" data-present-vous="dessinez" data-present-ils="dessinent" data-imparfait-je="dessinais" data-imparfait-tu="dessinais" data-imparfait-il="dessinait" data-imparfait-nous="dessinions" data-imparfait-vous="dessiniez" data-imparfait-ils="dessinaient" data-ps-je="dessinai" data-ps-tu="dessinas" data-ps-il="dessina" data-ps-nous="dessinâmes" data-ps-vous="dessinâtes" data-ps-ils="dessinèrent" data-futur-je="dessinerai" data-futur-tu="dessineras" data-futur-il="dessinera" data-futur-nous="dessinerons" data-futur-vous="dessinerez" data-futur-ils="dessineront" data-pc-je="ai dessiné" data-pc-tu="as dessiné" data-pc-il="a dessiné" data-pc-nous="avons dessiné" data-pc-vous="avez dessiné" data-pc-ils="ont dessiné" data-pqp-je="avais dessiné" data-pqp-tu="avais dessiné" data-pqp-il="avait dessiné" data-pqp-nous="avions dessiné" data-pqp-vous="aviez dessiné" data-pqp-ils="avaient dessiné" data-pa-je="eus dessiné" data-pa-tu="eus dessiné" data-pa-il="eut dessiné" data-pa-nous="eûmes dessiné" data-pa-vous="eûtes dessiné" data-pa-ils="eurent dessiné" data-futura-je="aurai dessiné" data-futura-tu="auras dessiné" data-futura-il="aura dessiné" data-futura-nous="aurons dessiné" data-futura-vous="aurez dessiné" data-futura-ils="auront dessiné" data-cond-je="dessinerais" data-cond-tu="dessinerais" data-cond-il="dessinerait" data-cond-nous="dessinerions" data-cond-vous="dessineriez" data-cond-ils="dessineraient" data-condp-je="aurais dessiné" data-condp-tu="aurais dessiné" data-condp-il="aurait dessiné" data-condp-nous="aurions dessiné" data-condp-vous="auriez dessiné" data-condp-ils="auraient dessiné" data-participe-present="dessinant" data-participe-passe="dessiné" data-subjonctif-present-je="que je dessine" data-subjonctif-present-tu="que tu dessines" data-subjonctif-present-il="qu'il dessine" data-subjonctif-present-nous="que nous dessinions" data-subjonctif-present-vous="que vous dessiniez" data-subjonctif-present-ils="qu'ils dessinent" data-subjonctif-imparfait-je="que je dessinasse" data-subjonctif-imparfait-tu="que tu dessinasses" data-subjonctif-imparfait-il="qu'il dessinât" data-subjonctif-imparfait-nous="que nous dessinassions" data-subjonctif-imparfait-vous="que vous dessinassiez" data-subjonctif-imparfait-ils="qu'ils dessinassent" data-subjonctif-passe-je="que j'aie dessiné" data-subjonctif-passe-tu="que tu aies dessiné" data-subjonctif-passe-il="qu'il ait dessiné" data-subjonctif-passe-nous="que nous ayons dessiné" data-subjonctif-passe-vous="que vous ayez dessiné" data-subjonctif-passe-ils="qu'ils aient dessiné" data-subjonctif-plusqueparfait-je="que j'eusse dessiné" data-subjonctif-plusqueparfait-tu="que tu eusses dessiné" data-subjonctif-plusqueparfait-il="qu'il eût dessiné" data-subjonctif-plusqueparfait-nous="que nous eussions dessiné" data-subjonctif-plusqueparfait-vous="que vous eussiez dessiné" data-subjonctif-plusqueparfait-ils="qu'ils eussent dessiné">dessiner</div>
+          <div class="word" data-type="verbe" data-subtype="transitif-direct" data-infinitive="chanter" 
+          data-present-je="chante" data-present-tu="chantes" data-present-il="chante" data-present-nous="chantons" data-present-vous="chantez" data-present-ils="chantent" data-imparfait-je="chantais" data-imparfait-tu="chantais" data-imparfait-il="chantait" data-imparfait-nous="chantions" data-imparfait-vous="chantiez" data-imparfait-ils="chantaient" data-ps-je="chantai" data-ps-tu="chantas" data-ps-il="chanta" data-ps-nous="chantâmes" data-ps-vous="chantâtes" data-ps-ils="chantèrent" data-futur-je="chanterai" data-futur-tu="chanteras" data-futur-il="chantera" data-futur-nous="chanterons" data-futur-vous="chanterez" data-futur-ils="chanteront" data-pc-je="ai chanté" data-pc-tu="as chanté" data-pc-il="a chanté" data-pc-nous="avons chanté" data-pc-vous="avez chanté" data-pc-ils="ont chanté" data-pqp-je="avais chanté" data-pqp-tu="avais chanté" data-pqp-il="avait chanté" data-pqp-nous="avions chanté" data-pqp-vous="aviez chanté" data-pqp-ils="avaient chanté" data-pa-je="eus chanté" data-pa-tu="eus chanté" data-pa-il="eut chanté" data-pa-nous="eûmes chanté" data-pa-vous="eûtes chanté" data-pa-ils="eurent chanté" data-futura-je="aurai chanté" data-futura-tu="auras chanté" data-futura-il="aura chanté" data-futura-nous="aurons chanté" data-futura-vous="aurez chanté" data-futura-ils="auront chanté" data-cond-je="chanterais" data-cond-tu="chanterais" data-cond-il="chanterait" data-cond-nous="chanterions" data-cond-vous="chanteriez" data-cond-ils="chanteraient" data-condp-je="aurais chanté" data-condp-tu="aurais chanté" data-condp-il="aurait chanté" data-condp-nous="aurions chanté" data-condp-vous="auriez chanté" data-condp-ils="auraient chanté" data-participe-present="chantant" data-participe-passe="chanté" data-subjonctif-present-je="que je chante" data-subjonctif-present-tu="que tu chantes" data-subjonctif-present-il="qu'il chante" data-subjonctif-present-nous="que nous chantions" data-subjonctif-present-vous="que vous chantiez" data-subjonctif-present-ils="qu'ils chantent" data-subjonctif-imparfait-je="que je chantasse" data-subjonctif-imparfait-tu="que tu chantasses" data-subjonctif-imparfait-il="qu'il chantât" data-subjonctif-imparfait-nous="que nous chantassions" data-subjonctif-imparfait-vous="que vous chantassiez" data-subjonctif-imparfait-ils="qu'ils chantassent" data-subjonctif-passe-je="que j'aie chanté" data-subjonctif-passe-tu="que tu aies chanté" data-subjonctif-passe-il="qu'il ait chanté" data-subjonctif-passe-nous="que nous ayons chanté" data-subjonctif-passe-vous="que vous ayez chanté" data-subjonctif-passe-ils="qu'ils aient chanté" data-subjonctif-plusqueparfait-je="que j'eusse chanté" data-subjonctif-plusqueparfait-tu="que tu eusses chanté" data-subjonctif-plusqueparfait-il="qu'il eût chanté" data-subjonctif-plusqueparfait-nous="que nous eussions chanté" data-subjonctif-plusqueparfait-vous="que vous eussiez chanté" data-subjonctif-plusqueparfait-ils="qu'ils eussent chanté">chanter</div>
+        </div>
+        <div class="subcategory"><strong>Transitifs indirects</strong>
+          <div class="word" data-type="verbe" data-subtype="transitif-indirect" data-infinitive="parler" data-present-je="parle" data-present-tu="parles" data-present-il="parle" data-present-nous="parlons" data-present-vous="parlez" data-present-ils="parlent" data-imparfait-je="parlais" data-imparfait-tu="parlais" data-imparfait-il="parlait" data-imparfait-nous="parlions" data-imparfait-vous="parliez" data-imparfait-ils="parlaient" data-ps-je="parlai" data-ps-tu="parlas" data-ps-il="parla" data-ps-nous="parlâmes" data-ps-vous="parlâtes" data-ps-ils="parlèrent" data-futur-je="parlerai" data-futur-tu="parleras" data-futur-il="parlera" data-futur-nous="parlerons" data-futur-vous="parlerez" data-futur-ils="parleront" data-pc-je="ai parlé" data-pc-tu="as parlé" data-pc-il="a parlé" data-pc-nous="avons parlé" data-pc-vous="avez parlé" data-pc-ils="ont parlé" data-pqp-je="avais parlé" data-pqp-tu="avais parlé" data-pqp-il="avait parlé" data-pqp-nous="avions parlé" data-pqp-vous="aviez parlé" data-pqp-ils="avaient parlé" data-pa-je="eus parlé" data-pa-tu="eus parlé" data-pa-il="eut parlé" data-pa-nous="eûmes parlé" data-pa-vous="eûtes parlé" data-pa-ils="eurent parlé" data-futura-je="aurai parlé" data-futura-tu="auras parlé" data-futura-il="aura parlé" data-futura-nous="aurons parlé" data-futura-vous="aurez parlé" data-futura-ils="auront parlé" data-cond-je="parlerais" data-cond-tu="parlerais" data-cond-il="parlerait" data-cond-nous="parlerions" data-cond-vous="parleriez" data-cond-ils="parleraient" data-condp-je="aurais parlé" data-condp-tu="aurais parlé" data-condp-il="aurait parlé" data-condp-nous="aurions parlé" data-condp-vous="auriez parlé" data-condp-ils="auraient parlé" data-participe-present="parlant" data-participe-passe="parlé" data-subjonctif-present-je="que je parle" data-subjonctif-present-tu="que tu parles" data-subjonctif-present-il="qu'il parle" data-subjonctif-present-nous="que nous parlions" data-subjonctif-present-vous="que vous parliez" data-subjonctif-present-ils="qu'ils parlent" data-subjonctif-imparfait-je="que je parlasse" data-subjonctif-imparfait-tu="que tu parlasses" data-subjonctif-imparfait-il="qu'il parlât" data-subjonctif-imparfait-nous="que nous parlassions" data-subjonctif-imparfait-vous="que vous parlassiez" data-subjonctif-imparfait-ils="qu'ils parlassent" data-subjonctif-passe-je="que j'aie parlé" data-subjonctif-passe-tu="que tu aies parlé" data-subjonctif-passe-il="qu'il ait parlé" data-subjonctif-passe-nous="que nous ayons parlé" data-subjonctif-passe-vous="que vous ayez parlé" data-subjonctif-passe-ils="qu'ils aient parlé" data-subjonctif-plusqueparfait-je="que j'eusse parlé" data-subjonctif-plusqueparfait-tu="que tu eusses parlé" data-subjonctif-plusqueparfait-il="qu'il eût parlé" data-subjonctif-plusqueparfait-nous="que nous eussions parlé" data-subjonctif-plusqueparfait-vous="que vous eussiez parlé" data-subjonctif-plusqueparfait-ils="qu'ils eussent parlé">parler</div>
+          <div class="word" data-type="verbe" data-subtype="transitif-indirect" data-infinitive="penser" data-present-je="pense" data-present-tu="penses" data-present-il="pense" data-present-nous="pensons" data-present-vous="pensez" data-present-ils="pensent" data-imparfait-je="pensais" data-imparfait-tu="pensais" data-imparfait-il="pensait" data-imparfait-nous="pensions" data-imparfait-vous="pensiez" data-imparfait-ils="pensaient" data-ps-je="pensai" data-ps-tu="pensas" data-ps-il="pensa" data-ps-nous="pensâmes" data-ps-vous="pensâtes" data-ps-ils="pensèrent" data-futur-je="penserai" data-futur-tu="penseras" data-futur-il="pensera" data-futur-nous="penserons" data-futur-vous="penserez" data-futur-ils="penseront" data-pc-je="ai pensé" data-pc-tu="as pensé" data-pc-il="a pensé" data-pc-nous="avons pensé" data-pc-vous="avez pensé" data-pc-ils="ont pensé" data-pqp-je="avais pensé" data-pqp-tu="avais pensé" data-pqp-il="avait pensé" data-pqp-nous="avions pensé" data-pqp-vous="aviez pensé" data-pqp-ils="avaient pensé" data-pa-je="eus pensé" data-pa-tu="eus pensé" data-pa-il="eut pensé" data-pa-nous="eûmes pensé" data-pa-vous="eûtes pensé" data-pa-ils="eurent pensé" data-futura-je="aurai pensé" data-futura-tu="auras pensé" data-futura-il="aura pensé" data-futura-nous="aurons pensé" data-futura-vous="aurez pensé" data-futura-ils="auront pensé" data-cond-je="penserais" data-cond-tu="penserais" data-cond-il="penserait" data-cond-nous="penserions" data-cond-vous="penseriez" data-cond-ils="penseraient" data-condp-je="aurais pensé" data-condp-tu="aurais pensé" data-condp-il="aurait pensé" data-condp-nous="aurions pensé" data-condp-vous="auriez pensé" data-condp-ils="auraient pensé" data-participe-present="pensant" data-participe-passe="pensé" data-subjonctif-present-je="que je pense" data-subjonctif-present-tu="que tu penses" data-subjonctif-present-il="qu'il pense" data-subjonctif-present-nous="que nous pensions" data-subjonctif-present-vous="que vous pensiez" data-subjonctif-present-ils="qu'ils pensent" data-subjonctif-imparfait-je="que je pensasse" data-subjonctif-imparfait-tu="que tu pensasses" data-subjonctif-imparfait-il="qu'il pensât" data-subjonctif-imparfait-nous="que nous pensassions" data-subjonctif-imparfait-vous="que vous pensassiez" data-subjonctif-imparfait-ils="qu'ils pensassent" data-subjonctif-passe-je="que j'aie pensé" data-subjonctif-passe-tu="que tu aies pensé" data-subjonctif-passe-il="qu'il ait pensé" data-subjonctif-passe-nous="que nous ayons pensé" data-subjonctif-passe-vous="que vous ayez pensé" data-subjonctif-passe-ils="qu'ils aient pensé" data-subjonctif-plusqueparfait-je="que j'eusse pensé" data-subjonctif-plusqueparfait-tu="que tu eusses pensé" data-subjonctif-plusqueparfait-il="qu'il eût pensé" data-subjonctif-plusqueparfait-nous="que nous eussions pensé" data-subjonctif-plusqueparfait-vous="que vous eussiez pensé" data-subjonctif-plusqueparfait-ils="qu'ils eussent pensé">penser</div>
+          <div class="word" data-type="verbe" data-subtype="transitif-indirect" data-infinitive="obéir" data-present-je="obéis" data-present-tu="obéis" data-present-il="obéit" data-present-nous="obéissons" data-present-vous="obéissez" data-present-ils="obéissent" data-imparfait-je="obéissais" data-imparfait-tu="obéissais" data-imparfait-il="obéissait" data-imparfait-nous="obéissions" data-imparfait-vous="obéissiez" data-imparfait-ils="obéissaient" data-ps-je="obéis" data-ps-tu="obéis" data-ps-il="obéit" data-ps-nous="obéîmes" data-ps-vous="obéîtes" data-ps-ils="obéirent" data-futur-je="obéirai" data-futur-tu="obéiras" data-futur-il="obéira" data-futur-nous="obéirons" data-futur-vous="obéirez" data-futur-ils="obéiront" data-pc-je="ai obéi" data-pc-tu="as obéi" data-pc-il="a obéi" data-pc-nous="avons obéi" data-pc-vous="avez obéi" data-pc-ils="ont obéi" data-pqp-je="avais obéi" data-pqp-tu="avais obéi" data-pqp-il="avait obéi" data-pqp-nous="avions obéi" data-pqp-vous="aviez obéi" data-pqp-ils="avaient obéi" data-pa-je="eus obéi" data-pa-tu="eus obéi" data-pa-il="eut obéi" data-pa-nous="eûmes obéi" data-pa-vous="eûtes obéi" data-pa-ils="eurent obéi" data-futura-je="aurai obéi" data-futura-tu="auras obéi" data-futura-il="aura obéi" data-futura-nous="aurons obéi" data-futura-vous="aurez obéi" data-futura-ils="auront obéi" data-cond-je="obéirais" data-cond-tu="obéirais" data-cond-il="obéirait" data-cond-nous="obéirions" data-cond-vous="obéiriez" data-cond-ils="obéiraient" data-condp-je="aurais obéi" data-condp-tu="aurais obéi" data-condp-il="aurait obéi" data-condp-nous="aurions obéi" data-condp-vous="auriez obéi" data-condp-ils="auraient obéi" data-participe-present="obéissant" data-participe-passe="obéi" data-subjonctif-present-je="que j'obéisse" data-subjonctif-present-tu="que tu obéisses" data-subjonctif-present-il="qu'il obéisse" data-subjonctif-present-nous="que nous obéissions" data-subjonctif-present-vous="que vous obéissiez" data-subjonctif-present-ils="qu'ils obéissent" data-subjonctif-imparfait-je="que j'obéisse" data-subjonctif-imparfait-tu="que tu obéisses" data-subjonctif-imparfait-il="qu'il obéît" data-subjonctif-imparfait-nous="que nous obéissions" data-subjonctif-imparfait-vous="que vous obéissiez" data-subjonctif-imparfait-ils="qu'ils obéissent" data-subjonctif-passe-je="que j'aie obéi" data-subjonctif-passe-tu="que tu aies obéi" data-subjonctif-passe-il="qu'il ait obéi" data-subjonctif-passe-nous="que nous ayons obéi" data-subjonctif-passe-vous="que vous ayez obéi" data-subjonctif-passe-ils="qu'ils aient obéi" data-subjonctif-plusqueparfait-je="que j'eusse obéi" data-subjonctif-plusqueparfait-tu="que tu eusses obéi" data-subjonctif-plusqueparfait-il="qu'il eût obéi" data-subjonctif-plusqueparfait-nous="que nous eussions obéi" data-subjonctif-plusqueparfait-vous="que vous eussiez obéi" data-subjonctif-plusqueparfait-ils="qu'ils eussent obéi">obéir</div>
+          <div class="word" data-type="verbe" data-subtype="transitif-indirect" data-infinitive="téléphoner" data-present-je="téléphone" data-present-tu="téléphones" data-present-il="téléphone" data-present-nous="téléphonons" data-present-vous="téléphonez" data-present-ils="téléphonent" data-imparfait-je="téléphonais" data-imparfait-tu="téléphonais" data-imparfait-il="téléphonait" data-imparfait-nous="téléphonions" data-imparfait-vous="téléphoniez" data-imparfait-ils="téléphonaient" data-ps-je="téléphonai" data-ps-tu="téléphonas" data-ps-il="téléphona" data-ps-nous="téléphonâmes" data-ps-vous="téléphonâtes" data-ps-ils="téléphonèrent" data-futur-je="téléphonerai" data-futur-tu="téléphoneras" data-futur-il="téléphonera" data-futur-nous="téléphonerons" data-futur-vous="téléphonerez" data-futur-ils="téléphoneront" data-pc-je="ai téléphoné" data-pc-tu="as téléphoné" data-pc-il="a téléphoné" data-pc-nous="avons téléphoné" data-pc-vous="avez téléphoné" data-pc-ils="ont téléphoné" data-pqp-je="avais téléphoné" data-pqp-tu="avais téléphoné" data-pqp-il="avait téléphoné" data-pqp-nous="avions téléphoné" data-pqp-vous="aviez téléphoné" data-pqp-ils="avaient téléphoné" data-pa-je="eus téléphoné" data-pa-tu="eus téléphoné" data-pa-il="eut téléphoné" data-pa-nous="eûmes téléphoné" data-pa-vous="eûtes téléphoné" data-pa-ils="eurent téléphoné" data-futura-je="aurai téléphoné" data-futura-tu="auras téléphoné" data-futura-il="aura téléphoné" data-futura-nous="aurons téléphoné" data-futura-vous="aurez téléphoné" data-futura-ils="auront téléphoné" data-cond-je="téléphonerais" data-cond-tu="téléphonerais" data-cond-il="téléphonerait" data-cond-nous="téléphonerions" data-cond-vous="téléphoneriez" data-cond-ils="téléphoneraient" data-condp-je="aurais téléphoné" data-condp-tu="aurais téléphoné" data-condp-il="aurait téléphoné" data-condp-nous="aurions téléphoné" data-condp-vous="auriez téléphoné" data-condp-ils="auraient téléphoné" data-participe-present="téléphonant" data-participe-passe="téléphoné" data-subjonctif-present-je="que je téléphone" data-subjonctif-present-tu="que tu téléphones" data-subjonctif-present-il="qu'il téléphone" data-subjonctif-present-nous="que nous téléphonions" data-subjonctif-present-vous="que vous téléphoniez" data-subjonctif-present-ils="qu'ils téléphonent" data-subjonctif-imparfait-je="que je téléphonasse" data-subjonctif-imparfait-tu="que tu téléphonasses" data-subjonctif-imparfait-il="qu'il téléphonât" data-subjonctif-imparfait-nous="que nous téléphonassions" data-subjonctif-imparfait-vous="que vous téléphonassiez" data-subjonctif-imparfait-ils="qu'ils téléphonassent" data-subjonctif-passe-je="que j'aie téléphoné" data-subjonctif-passe-tu="que tu aies téléphoné" data-subjonctif-passe-il="qu'il ait téléphoné" data-subjonctif-passe-nous="que nous ayons téléphoné" data-subjonctif-passe-vous="que vous ayez téléphoné" data-subjonctif-passe-ils="qu'ils aient téléphoné" data-subjonctif-plusqueparfait-je="que j'eusse téléphoné" data-subjonctif-plusqueparfait-tu="que tu eusses téléphoné" data-subjonctif-plusqueparfait-il="qu'il eût téléphoné" data-subjonctif-plusqueparfait-nous="que nous eussions téléphoné" data-subjonctif-plusqueparfait-vous="que vous eussiez téléphoné" data-subjonctif-plusqueparfait-ils="qu'ils eussent téléphoné">téléphoner</div>
+        </div>
+      </div>
+    </div>
+    <div class="category">
+      <h4 onclick="toggleCategory(this)">
+        <span>Adjectifs</span>
+        <span class="category-toggle">▶</span>
+      </h4>
+      <div class="category-content">
+        <div class="subcategory"><strong>Qualificatifs</strong>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="epicene" data-plural="sages">sage</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="petite" data-plural="petits" data-feminine-plural="petites">petit</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="grande" data-plural="grands" data-feminine-plural="grandes">grand</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="belle" data-plural="beaux" data-feminine-plural="belles">beau</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="jolie" data-plural="jolis" data-feminine-plural="jolies">joli</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="gentille" data-plural="gentils" data-feminine-plural="gentilles">gentil</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="méchante" data-plural="méchants" data-feminine-plural="méchantes">méchant</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="intelligente" data-plural="intelligents" data-feminine-plural="intelligentes">intelligent</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="contente" data-plural="contents" data-feminine-plural="contentes">content</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="epicene" data-plural="tristes">triste</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="epicene" data-plural="rouges">rouge</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="bleue" data-plural="bleus" data-feminine-plural="bleues">bleu</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="verte" data-plural="verts" data-feminine-plural="vertes">vert</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="epicene" data-plural="rapides">rapide</div>
+          <div class="word" data-type="adjectif" data-subtype="qualificatif" data-gender="masculin" data-feminine="lente" data-plural="lents" data-feminine-plural="lentes">lent</div>
+        </div>
+        <div class="subcategory"><strong>Relationnels</strong>
+          <div class="word" data-type="adjectif" data-subtype="relationnel" data-gender="epicene" data-plural="scolaires">scolaire</div>
+          <div class="word" data-type="adjectif" data-subtype="relationnel" data-gender="masculin" data-feminine="familiale" data-plural="familiaux" data-feminine-plural="familiales">familial</div>
+          <div class="word" data-type="adjectif" data-subtype="relationnel" data-gender="masculin" data-feminine="musicale" data-plural="musicaux" data-feminine-plural="musicales">musical</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h4 onclick="toggleCategory(this)">
+        <span>Adverbes</span>
+        <span class="category-toggle">▶</span>
+      </h4>
+      <div class="category-content">
+     <div class="subcategory"><strong>De manière</strong>
+          <div class="word" data-type="adverbe">bien</div>
+          <div class="word" data-type="adverbe">mal</div>
+          <div class="word" data-type="adverbe">vite</div>
+          <div class="word" data-type="adverbe">lentement</div>
+          <div class="word" data-type="adverbe">doucement</div>
+        </div>
+        <div class="subcategory"><strong>De temps</strong>
+          <div class="word" data-type="adverbe">souvent</div>
+          <div class="word" data-type="adverbe">toujours</div>
+          <div class="word" data-type="adverbe">jamais</div>
+          <div class="word" data-type="adverbe">maintenant</div>
+          <div class="word" data-type="adverbe">hier</div>
+          <div class="word" data-type="adverbe">aujourd'hui</div>
+          <div class="word" data-type="adverbe">demain</div>
+        </div>
+        <div class="subcategory"><strong>De lieu</strong>
+          <div class="word" data-type="adverbe">ici</div>
+          <div class="word" data-type="adverbe">là</div>
+          <div class="word" data-type="adverbe">ailleurs</div>
+          <div class="word" data-type="adverbe">partout</div>
+        </div>
+        <div class="subcategory"><strong>D'intensité</strong>
+          <div class="word" data-type="adverbe">très</div>
+          <div class="word" data-type="adverbe">trop</div>
+          <div class="word" data-type="adverbe">peu</div>
+          <div class="word" data-type="adverbe">beaucoup</div>
+          <div class="word" data-type="adverbe">assez</div>
+        </div>
+        <div class="subcategory"><strong>De négation</strong>
+          <div class="word" data-type="adverbe" data-elided="n'">ne</div>
+          <div class="word" data-type="adverbe">pas</div>
+          <div class="word" data-type="adverbe">plus</div>
+        </div>
+      </div>
+    </div>
+    <div class="category">
+      <h4 onclick="toggleCategory(this)">
+        <span>Conjonctions</span>
+        <span class="category-toggle">▶</span>
+      </h4>
+      <div class="category-content">
+        <div class="word" data-type="conjonction">et</div>
+        <div class="word" data-type="conjonction">ou</div>
+        <div class="word" data-type="conjonction">mais</div>
+        <div class="word" data-type="conjonction">car</div>
+        <div class="word" data-type="conjonction">ni</div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h4 onclick="toggleCategory(this)">
+        <span>Prépositions</span>
+        <span class="category-toggle">▶</span>
+      </h4>
+      <div class="category-content">
+        <div class="word" data-type="preposition">à</div>
+        <div class="word" data-type="preposition" data-elided="d'">de</div>
+        <div class="word" data-type="preposition">sur</div>
+        <div class="word" data-type="preposition">sous</div>
+        <div class="word" data-type="preposition">dans</div>
+        <div class="word" data-type="preposition">avec</div>
+        <div class="word" data-type="preposition">pour</div>
+        <div class="word" data-type="preposition">par</div>
+        <div class="word" data-type="preposition">vers</div>
+        <div class="word" data-type="preposition">chez</div>
+        <div class="word" data-type="preposition">entre</div>
+        <div class="word" data-type="preposition">devant</div>
+        <div class="word" data-type="preposition">derrière</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Compose ta phrase :</h3>
+<div id="sentence-area"></div>
+<div id="functions-area"></div>
+
+<div class="button-group">
+  <button id="check-btn">Vérifier la phrase</button>
+  <button id="reset-btn">Réinitialiser</button>
+</div>
+<div id="result"></div>
+
+<!-- Modale pour le choix du genre de l'adjectif (initialement cachée) -->
+<div id="adjective-gender-modal" class="modal-overlay">
+  <div class="modal-content">
+    <span class="modal-close-btn" onclick="this.closest('.modal-overlay').classList.remove('visible')">&times;</span>
+    <p>Accorder l'adjectif :</p>
+    <button id="adj-gender-masculin">Masculin</button>
+    <button id="adj-gender-feminin">Féminin</button>
+  </div>
+</div>
+
+<!-- Modale pour le choix du nombre du nom -->
+<div id="noun-number-modal" class="modal-overlay">
+  <div class="modal-content">
+    <span class="modal-close-btn" onclick="this.closest('.modal-overlay').classList.remove('visible')">&times;</span>
+    <p>Choisir le nombre :</p>
+    <button id="noun-singular">Singulier</button>
+    <button id="noun-plural">Pluriel</button>
+  </div>
+</div>
+
+<!-- Modale pour la conjugaison du verbe -->
+<div id="verb-conjugation-modal" class="modal-overlay">
+  <div class="modal-content">
+    <!-- Le contenu sera généré dynamiquement par JavaScript -->
+  </div>
+</div>
+
+<!-- Modale pour l'élision des pronoms -->
+<div id="elision-modal" class="modal-overlay">
+  <div class="modal-content">
+    <!-- Le contenu sera généré par JavaScript -->
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+<script src="correcteur2.js"></script> <!-- Le seul fichier pour toute la logique de correction -->
+<script src="script.js" defer></script> <!-- Le script principal de l'interface, chargé en dernier -->
+
+
+
+
+
+
+</body>
+</html>
+</html>

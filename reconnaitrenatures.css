@@ -1,0 +1,175 @@
+:root {
+    --color-primary: #007bff; /* Bleu pour l'action */
+    --color-success: #28a745; /* Vert pour le succès */
+    --color-danger: #dc3545; /* Rouge pour l'erreur */
+    --color-background: #f8f9fa; /* Fond clair */
+    --color-word: #e9ecef; /* Fond des jetons mots */
+    --color-selected: #ffc107; /* Jaune pour la sélection */
+}
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: var(--color-background);
+}
+.back-button {
+    display: inline-block;
+    padding: 10px 18px;
+    margin-bottom: 20px;
+    background-color: #6c757d; /* Un gris neutre */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+h1 {
+    color: var(--color-primary);
+}
+.zone-controle, .zone-exercice {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* --- ZONE EXERCICE (Phrase) --- */
+.phrase-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 24px;
+    min-height: 50px;
+}
+.word-token {
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+    background-color: var(--color-word);
+    color: #343a40;
+    font-weight: bold;
+    position: relative;
+}
+.word-token:hover {
+    background-color: #dee2e6;
+}
+.word-token.selected {
+    background-color: var(--color-selected);
+    border-color: #ff8800;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+}
+.word-token.correct {
+    background-color: #d4edda;
+    color: var(--color-success);
+    border-color: var(--color-success);
+    cursor: default;
+}
+.nature-tag {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    background-color: var(--color-success);
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    z-index: 10;
+}
+
+/* --- MODALE (Nouvelles classes) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none; /* Masqué par défaut */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-overlay.visible {
+    display: flex;
+}
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+}
+.modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #aaa;
+}
+.modal-close-btn:hover {
+    color: #333;
+}
+
+/* --- ZONE CHOIX (Boutons) --- */
+.choix-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+.choix-buttons button {
+    padding: 10px 15px;
+    border: 1px solid var(--color-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s, border-color 0.2s;
+    background-color: white;
+    color: var(--color-primary);
+}
+.choix-buttons button.active,
+.choix-buttons button:hover {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: #0056b3;
+}
+.validation-btn {
+    background-color: var(--color-success) !important;
+    color: white !important;
+    border: none !important;
+}
+.validation-btn:disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed;
+}
+.result-message {
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 15px;
+    display: none;
+}
+.result-message.visible {
+    display: block;
+}
+.result-message.success {
+    background-color: #d4edda;
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+}
+.result-message.error {
+    background-color: #f8d7da;
+    color: var(--color-danger);
+    border: 1px solid var(--color-danger);
+}

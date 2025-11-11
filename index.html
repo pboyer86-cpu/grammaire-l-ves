@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Correcteur Grammatical</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f7f6; /* Light background */
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px 60px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .button-group button {
+            display: block; /* Each button on a new line */
+            width: 300px; /* Fixed width for buttons */
+            padding: 15px 25px;
+            margin: 15px auto; /* Center buttons and add vertical spacing */
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #3498db; /* Blue button */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none; /* For anchor tags styled as buttons */
+        }
+        .button-group button:hover:not(:disabled) {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .button-group button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .button-group a {
+            text-decoration: none; /* Remove underline from links */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue sur votre assistant grammatical !</h1>
+        <div class="button-group">
+            <a href="construire des phrases/generetaphrase.html"><button>Construis ta phrase</button></a>
+            <a href="reconnaitre natures/reconnaitrenatures.html"><button>Identifie les natures grammaticales</button></a>
+            <button disabled title="Fonctionnalité à venir">Identifie les fonctions</button>
+        </div>
+    </div>
+</body>
+</html>
