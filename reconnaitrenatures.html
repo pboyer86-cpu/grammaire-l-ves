@@ -6,12 +6,12 @@
 <title>Interface A : Reconnaître les Natures Grammaticales</title>
 <link rel="stylesheet" href="reconnaitrenatures.css">
 
-<script src="../construire des phrases/correcteur2.js"></script>
+<script src="correcteur2.js"></script>
 
 </head>
 <body>
 
-<a href="../index.html" class="back-button">
+<a href="index.html" class="back-button">
     &larr; Retour à l'accueil
 </a>
 <h1>🧠 Entraînement : Reconnaître les Natures Grammaticales</h1>
@@ -118,7 +118,7 @@
     async function loadWordBank() {
         try {
             // NOTE : Vérifiez que ce chemin est correct par rapport à votre dossier 'construire des phrases'
-            const response = await fetch('../construire des phrases/generetaphrase.html');
+            const response = await fetch('generetaphrase.html');
             
             if (!response.ok) {
                 // Si la banque ne se charge pas, c'est la cause la plus fréquente d'échec total.
@@ -562,4 +562,5 @@
     });
 </script>
 </body>
+
 </html>
